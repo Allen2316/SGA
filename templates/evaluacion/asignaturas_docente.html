@@ -1,0 +1,60 @@
+{% extends 'list.html' %}
+
+
+{% load static %}
+
+
+{% block tituloLista %}
+<h1>Lista de Carreras</h1>
+{% if user.is_authenticated and user.is_docente %}
+SOY PROFESOR
+
+{% elif user.is_authenticated and user.is_estudiante %}
+SOY ESTUDIANTE
+
+{% elif user.is_authenticated and user.is_directivo %}
+SOY DIRECTIVO
+{% else %}
+SOY ADMIN
+{% endif %}
+
+<h2>{{user.username}} Bienvenido</h2>
+{% endblock %}
+
+{% block thead %}
+<tr>
+    <th>Ciclo </th>
+    <th>Paralelo</th>
+    <th>Nombre</th>
+    <th>Docente</th>
+    <th>Evaluar</th>
+</tr>
+{% endblock thead %}
+
+{% block tbody %}
+
+
+
+
+{% for asignaturas in asignatura.asignaturaEstudiante.all %}
+<tr>
+    <td>{{ asignaturas.semestre }}</td>
+    <td>{{ asignaturas.paralelo }}</td>
+    <td>{{ asignaturas.nombre }}</td>
+    {% for p in asignaturas.docenteAsignaturaDocente.all %}
+    <td>{{p.docente.first_name }}</td>
+    {% endfor %}
+    <td><a href="{% url 'registro_cuestionario' asignaturas.id %}" class="btn btn-success"
+            style="cursor:pointer; color:white;">Evaluar</a></td>
+</tr>
+{% endfor %}
+
+{% endblock tbody %}
+
+{% block actualizarTbl%}
+<div class="section-footer bg-whitesmoke br">
+    <a class="btn btn-success" href="" style="cursor:pointer; color:white;"><i class="fas fa-sync-alt"></i>
+        Actualizar</a>
+</div>
+
+{% endblock %}

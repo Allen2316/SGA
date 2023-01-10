@@ -1,0 +1,56 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{% block tituloLista %}
+<h1>Lista de Carreras</h1>
+{% endblock %}
+
+{% block thead %}
+<tr>
+    <th>Nombre</th>
+    <th>Estado</th>
+    <th>Tipo</th>
+    <th>Opciones</th>
+</tr>
+{% endblock thead %}
+
+{% block tbody %}
+
+
+{% if object_list %}
+{% for carrera in object_list %}
+<tr>
+    <td>{{carrera.nombre}}</td>
+    {% if carrera.estado == 'S' %}
+    <td>Suspendida</td>
+    {% elif carrera.estado == 'R' %}
+    <td>Rediseño</td>
+    {% else %}
+    <td>Ejecutandose</td>
+    {% endif %}
+
+    {% if carrera.tipo == 'T' %}
+    <td>Tecnico</td>
+    {% elif carrera.tipo == 'P' %}
+    <td>Profesional</td>
+    {% else %}
+    <td>Medicina</td>
+    {% endif %}
+    <td><a href="{% url 'editar_carrera' carrera.id_carrera %}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+        <a href="{% url 'eliminar_carrera' carrera.id_carrera %}" class="btn btn-danger"><i
+                class="fas fa-trash-alt"></i></a></td>
+</tr>
+{% endfor %}
+{% else %}
+<td>No existe ningun registro de carrera</td>
+{% endif %}
+
+{% endblock tbody %}
+
+{% block actualizarTbl%}
+<div class="section-footer bg-whitesmoke br">
+    <a class="btn btn-success" href="{% url 'lista_carrera' %}" style="cursor:pointer; color:white;"><i
+            class="fas fa-sync-alt"></i>
+        Actualizar</a>
+</div>
+{% endblock %}

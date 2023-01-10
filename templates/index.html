@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+<section class="section section-lg bg-tertiary">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center text-white">
+
+        <h1 style="color: #8EAD45;"> Bienvenidos al sistema de evaluación de docentes de ISLA</h1>
+        <p>
+          {% if periodoEvaluacionActual %}
+          <a href="{% url 'logueo' %}">
+            >>> <u> <b style="color: black; font-weight: 250%; font-size: 14px;">
+                {{ periodoEvaluacionActual.titulo|upper }} </b> </u>
+          </a>
+          {% else %}
+          >>> <b> No existen Procesos de Evaluacion actualmente </b>
+          {% endif %}
+
+        </p>
+        <p>
+          {% if periodoEvaluacionActual %}
+          {{ periodoEvaluacionActual.descripcion }} <br />
+
+          (Desde
+          <b>
+            {{ periodoEvaluacionActual.fecha_inicio_publicacion|date:"l"|title }}
+            {{ periodoEvaluacionActual.fecha_inicio_publicacion }}
+          </b>
+          hasta
+          <b>
+            {{ periodoEvaluacionActual.fecha_fin|date:"l"|title }}
+            {{ periodoEvaluacionActual.fecha_fin }})
+          </b>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

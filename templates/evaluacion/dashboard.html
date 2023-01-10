@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+
+<section class="section section-lg bg-tertiary">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center text-white">
+        {% if user.is_authenticated and user.is_docente %}
+        SOY PROFESOR
+
+        {% elif user.is_authenticated and user.is_estudiante %}
+        SOY ESTUDIANTE
+
+        {% elif user.is_authenticated and user.is_directivo %}
+        SOY DIRECTIVO
+        {% else %}
+        SOY ADMIN
+        {% endif %}
+
+        
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

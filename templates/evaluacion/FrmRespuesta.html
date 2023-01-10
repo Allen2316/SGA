@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="section">
+  <div class="section-body">
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <p>
+
+            <form method="POST" action="{% url 'voto' user.id %}">
+              {% csrf_token %}
+              <!-- pregunta[1].eleccion_set.all()  -->
+
+              {% if error_message %} <p><strong>{{ error_message }}</strong></p> {% endif %}
+
+
+              {% for e in asignatura.cuestionario.cuestionarios.all %}
+              <div class="custom-control custom-radio custom-control-inline">
+                <div>
+                  <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">{{ e.orden }}.- {{ e.texto }}</label>
+                </div>
+                {% for p in '12345'|make_list %}
+                <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">{{ forloop.counter }}</label>
+                <input type="radio" id="{{ e.id }}eleccion{{ forloop.counter }}" name="{{ e.texto }}" value="{{p}}"
+                  class="custom-control-input">
+
+                {% endfor %}
+              </div>
+              {% endfor %}
+
+              <br>
+
+
+              <button type="submit" class="btn btn-success">
+                <i class="fas fa-user"></i> Guardar
+              </button>
+
+          </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+</section>
+{% endblock content %}
