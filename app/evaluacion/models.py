@@ -8,28 +8,7 @@ from django.db.models import Q
 from django.core.exceptions import MultipleObjectsReturned
 from collections import OrderedDict
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User, AbstractUser
-
-
-class User(AbstractUser):
-    is_estudiante = models.BooleanField(default=False)
-    is_docente = models.BooleanField(default=False)
-    is_directivo = models.BooleanField(default=False)
-    first_name = models.CharField(max_length=80)
-    last_name = models.CharField(max_length=80)
-    
-    #!todo corregir encriptacion
-    def save(self, *args, **kwargs):
-        self.password = make_password(self.password)
-        super(User, self).save(*args, **kwargs)
-
-    """  def save(self, commit=True):
-        # Save the provided password in hashed format
-        user = super(User, self).save(commit=False)
-        user.set_password(self.password)
-        if commit:
-            user.save()
-        return user """
+from django.contrib.auth.models import User
 
 
 class PeriodoAcademico(models.Model):
@@ -163,10 +142,20 @@ class Asignatura(models.Model):
 
 # id sesion estudiante
 
+# Estudiante
+
 
 class EstudianteAsignaturaDocente(models.Model):
+    """ nombres = models.CharField(max_length=100, null=False)
+    apellidos = models.CharField(
+        max_length=100, verbose_name='ciclo', null=False)
+    cedula = models.CharField(max_length=10, null=False, unique=True)
+     """
     estudiante = models.OneToOneField(
         User, related_name='estudiante', on_delete=models.CASCADE, primary_key=True)
+
+    is_estudiante = models.BooleanField(default=True, null=False)
+
     asignaturaEstudiante = models.ManyToManyField(
         Asignatura, related_name='estudiantesAsignaturaDocente', verbose_name='Estudiante - Docente')
 
@@ -177,11 +166,16 @@ class EstudianteAsignaturaDocente(models.Model):
         verbose_name = 'EstudianteAsignaturaDocente'
         verbose_name_plural = 'EstudianteAsignaturaDocentes'
 
+# Directivo
+
 
 class DirectivoAsignaturaDocente(models.Model):
 
     directivo = models.OneToOneField(
         User, related_name='directivo', on_delete=models.CASCADE, primary_key=True)
+
+    is_directivo = models.BooleanField(default=True, null=False)
+
     docente = models.ManyToManyField(
         User, related_name='directivoAsignaturaDocente', verbose_name='Directivo - Docente')
 
@@ -193,9 +187,13 @@ class DirectivoAsignaturaDocente(models.Model):
         verbose_name_plural = 'DirectivoAsignaturaDocentes'
 
 
+# Docente
 class DocenteAsignaturaDocente(models.Model):
     docente = models.OneToOneField(
         User, related_name='docente', on_delete=models.CASCADE, primary_key=True)
+
+    is_docente = models.BooleanField(default=True, null=False)
+
     asignaturas = models.ManyToManyField(
         Asignatura, related_name='docenteAsignaturaDocente', verbose_name='Autoevaluacion - Docente')
 

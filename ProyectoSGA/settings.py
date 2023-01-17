@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'evaluacion.User'
+#AUTH_USER_MODEL = 'evaluacion.User'
 LOGIN_URL = reverse_lazy('logueo')  # url name = autenticar de login->urls
 LOGOUT_URL = reverse_lazy('logueo')
 

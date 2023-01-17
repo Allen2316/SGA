@@ -53,11 +53,13 @@ def dashboard(request):
 
 
 @login_required
-def vista_cuestionario(request, pk):
-    try:
-        modelo = models.EstudianteAsignaturaDocente.objects.get(pk=pk)
-        data = {
-            'asignatura': modelo,
+def vista_cuestionario(request, pk):    
+    
+    try:        
+        estudiante = models.EstudianteAsignaturaDocente.objects.get(pk=pk)        
+        data = {                        
+            'estudiante': estudiante,            
+            'userE': request.user.estudiante,
         }
     except:
         data = {

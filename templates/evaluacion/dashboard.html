@@ -7,7 +7,14 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 text-center text-white">
-        {% if user.is_authenticated and user.is_docente %}
+        {{ userE.is_estudiante }}
+        asdasd
+
+        {% if user.is_authenticated and user.estudiante.is_estudiante %}
+        <h1>xxx Estudiante xxx</h1>
+        
+        {% endif %}
+        {% if user.is_authenticated and user.estudiante.is_estudiante %}
         SOY PROFESOR
 
         {% elif user.is_authenticated and user.is_estudiante %}

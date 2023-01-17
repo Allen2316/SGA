@@ -6,14 +6,19 @@
 
 {% block tituloLista %}
 <h1>Lista de Carreras</h1>
-{% if user.is_authenticated and user.is_docente %}
+{% if Error %}
+{{ Error }}
+{% endif %}
+
+{% if user.is_authenticated and userDo.is_docente %}
 SOY PROFESOR
 
-{% elif user.is_authenticated and user.is_estudiante %}
+{% elif user.is_authenticated and userE.is_estudiante %}
 SOY ESTUDIANTE
 
-{% elif user.is_authenticated and user.is_directivo %}
+{% elif user.is_authenticated and userDi.is_directivo %}
 SOY DIRECTIVO
+
 {% else %}
 SOY ADMIN
 {% endif %}
@@ -36,16 +41,22 @@ SOY ADMIN
 
 
 
-{% for asignaturas in asignatura.asignaturaEstudiante.all %}
+{% for asignaturas in estudiante.asignaturaEstudiante.all %}
 <tr>
     <td>{{ asignaturas.semestre }}</td>
     <td>{{ asignaturas.paralelo }}</td>
     <td>{{ asignaturas.nombre }}</td>
-    {% for p in asignaturas.docenteAsignaturaDocente.all %}
-    <td>{{p.docente.first_name }}</td>
-    {% endfor %}
-    <td><a href="{% url 'registro_cuestionario' asignaturas.id %}" class="btn btn-success"
+    <td>
+        {% for p in asignaturas.docenteAsignaturaDocente.all %}
+
+        {{p.docente.first_name }} {{p.docente.last_name }}
+        <p>juan </p>
+        
+        {% endfor %}
+        <td><a href="{% url 'registro_cuestionario' asignaturas.id %}" class="btn btn-success"
             style="cursor:pointer; color:white;">Evaluar</a></td>
+    </td>
+    
 </tr>
 {% endfor %}
 
