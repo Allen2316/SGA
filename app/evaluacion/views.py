@@ -122,9 +122,12 @@ def registro_cuestionario(request, pk):
 
         if request.user.estudiante.is_estudiante:
             asignatura = models.Asignatura.objects.get(pk=pk)
+            docente = models.DocenteAsignaturaDocente.objects.get(
+                asignaturas=asignatura)
             print(asignatura)
             data = {
                 'asignatura': asignatura,
+                'docente': docente,
             }
     except:
         try:
@@ -136,14 +139,17 @@ def registro_cuestionario(request, pk):
         except:
             try:
                 if request.user.directivo.is_directivo:
-                    directivo = models.DirectivoAsignaturaDocente.objects.get(
+                    docente = models.DocenteAsignaturaDocente.objects.get(
                         pk=pk)
+                    directivo = models.DirectivoAsignaturaDocente.objects.get(
+                        docente=docente)
                     data = {
                         'directivo': directivo,
+                        'docente': docente,
                     }
             except:
                 data = error
-    print(data)
+
     return render(request, 'evaluacion/FrmRespuesta.html', data)
 
 
@@ -179,7 +185,7 @@ def registro_cuestionario(request, pk):
 
 
 @login_required
-def voto(request, pk):
+def voto(request, pk, docente_id):
     valores = request.POST
     lista = []
     id_p = []
@@ -218,10 +224,14 @@ def voto(request, pk):
     try:
         if request.user.estudiante.is_estudiante:
             estudiante = models.EstudianteAsignaturaDocente.objects.get(
-                pk=request.user.estudiante.pk)
+                pk=pk)
+
+            docente = models.DocenteAsignaturaDocente.objects.get(
+                pk=docente_id)
+            print(docente)
 
             evaluacion = models.Evaluacion(
-                cuestionario=pregunta.cuestionario,  estudiante=estudiante, totalEvaluacion=total['respuesta__sum'])
+                cuestionario=pregunta.cuestionario, docente=docente,  estudiante=estudiante, totalEvaluacion=total['respuesta__sum'])
             evaluacion.save()
 
     except:
@@ -237,10 +247,69 @@ def voto(request, pk):
                 if request.user.directivo.is_directivo:
                     directivo = models.DirectivoAsignaturaDocente.objects.get(
                         pk=pk)
+                    docente = models.DocenteAsignaturaDocente.objects.get(
+                        pk=docente_id)
+
                     evaluacion = models.Evaluacion(
-                        cuestionario=cuestionario, directivo=directivo, totalEvaluacion=total)
+                        cuestionario=pregunta.cuestionario, directivo=directivo, docente=docente, totalEvaluacion=total['respuesta__sum'])
                     evaluacion.save()
             except:
                 pass
 
     return HttpResponseRedirect(reverse('vista_cuestionario', args=[str(pk)]))
+
+
+""" @login_required
+def votoDirectivo(request, pk, docente_id):
+    valores = request.POST
+    lista = []
+    id_p = []
+
+    for i in valores:
+        lista.append(request.POST[i])
+        id_p.append(i)
+
+    lista.pop(0)
+    id_p.pop(0)
+
+    print(lista)
+    print(id_p)
+    cont = 0
+    for pre in id_p:
+
+        try:
+            pregunta = get_object_or_404(models.Pregunta, pk=pre)
+        except (KeyError, models.Respuesta.DoesNotExist):
+            return render(request, 'evaluacion/FrmRespuesta.html', {
+                'error_message': 'No seleccionó una opción.',
+            })
+        else:
+            respuesta = models.Respuesta(
+                respuesta=lista[cont], pregunta=pregunta)
+            respuesta.save()
+
+            cont += 1
+
+    cuestionario = models.Cuestionario.objects.get(
+        pk=pregunta.cuestionario.pk)
+    print(cuestionario)
+    total = models.Respuesta.objects.filter(
+        pregunta__cuestionario__pk=cuestionario.pk).aggregate(Sum('respuesta'))
+
+    try:
+        if request.user.directivo.is_directivo:
+            directivo = models.DirectivoAsignaturaDocente.objects.get(
+                pk=pk)
+            docente = models.DocenteAsignaturaDocente.objects.get(
+                pk=docente_id)
+
+            evaluacion = models.Evaluacion(
+                cuestionario=pregunta.cuestionario, directivo=directivo, docente=docente, totalEvaluacion=total['respuesta__sum'])
+
+            evaluacion.save()
+
+    except:
+        pass
+
+    return HttpResponseRedirect(reverse('vista_cuestionario', args=[str(pk)]))
+ """

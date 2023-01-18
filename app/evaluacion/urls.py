@@ -18,6 +18,7 @@ urlpatterns = [
     path('registro_cuestionario/<pk>', views.registro_cuestionario,
          name='registro_cuestionario'),
 
-    path('voto/<pk>/', views.voto, name="voto"),
+    path('voto/<pk>/<int:docente_id>/', views.voto, name="voto"),
+    #path('votoDirectivo/<pk>/<int:docente_id>', views.votoDirectivo, name="votoDirectivo"),
 
 ]
