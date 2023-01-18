@@ -5,28 +5,30 @@
 
 
 {% block tituloLista %}
-<h1>Lista de Carreras</h1>
+<h1>Lista de Evaluaciones</h1>
 {% if Error %}
-{{ Error }}
+<p>{{ Error }}</p>
 {% endif %}
 
-{% if user.is_authenticated and userDo.is_docente %}
+{% if user.is_authenticated and docente.is_docente %}
 SOY PROFESOR
 
-{% elif user.is_authenticated and userE.is_estudiante %}
+{% elif user.is_authenticated and estudiante.is_estudiante %}
 SOY ESTUDIANTE
 
-{% elif user.is_authenticated and userDi.is_directivo %}
+{% elif user.is_authenticated and directivo.is_directivo %}
 SOY DIRECTIVO
 
-{% else %}
+{% elif user.is_authenticated and user.is_superuser %}
 SOY ADMIN
 {% endif %}
 
-<h2>{{user.username}} Bienvenido</h2>
+<h2>{{user.first_name}} {{user.last_name}} <code>({{user.username}})</code> Bienvenido</h2>
 {% endblock %}
 
 {% block thead %}
+
+{% if estudiante.is_estudiante %}
 <tr>
     <th>Ciclo </th>
     <th>Paralelo</th>
@@ -34,13 +36,34 @@ SOY ADMIN
     <th>Docente</th>
     <th>Evaluar</th>
 </tr>
+{% elif docente.is_docente %}
+<tr>
+    <th>Nombres</th>
+    <th>Apellidos</th>
+    <th>Usuario</th>
+    <th>Cedula</th>
+    <th>AutoEvaluar</th>
+</tr>
+
+{% elif directivo.is_directivo %}
+<tr>
+    <th>Nombres</th>
+    <th>Apellidos</th>
+    <th>Cedula</th>
+    <th>Evaluar Docente</th>
+</tr>
+
+{% endif %}
+
 {% endblock thead %}
 
 {% block tbody %}
 
 
 
+<!-- asignatura -->
 
+{% if estudiante %}
 {% for asignaturas in estudiante.asignaturaEstudiante.all %}
 <tr>
     <td>{{ asignaturas.semestre }}</td>
@@ -48,18 +71,52 @@ SOY ADMIN
     <td>{{ asignaturas.nombre }}</td>
     <td>
         {% for p in asignaturas.docenteAsignaturaDocente.all %}
-
         {{p.docente.first_name }} {{p.docente.last_name }}
-        <p>juan </p>
-        
         {% endfor %}
-        <td><a href="{% url 'registro_cuestionario' asignaturas.id %}" class="btn btn-success"
-            style="cursor:pointer; color:white;">Evaluar</a></td>
+
     </td>
-    
+
+    {% if voto is not True %}
+    <td><a href="{% url 'registro_cuestionario' asignaturas.id %}" class="btn btn-success"
+            style="cursor:pointer; color:white;">Evaluar</a></td>
+    {% endif %}
+
+
 </tr>
 {% endfor %}
+{% endif %}
 
+<!-- docente -->
+
+{% if docente %}
+{% for datos in docente.cuestionarios.all %}
+<tr>
+    {% if forloop.counter == 1 %}
+    <td>{{ docente.docente.first_name }}</td>
+    <td>{{ docente.docente.last_name }}</td>
+    <td>{{ docente.docente.username }}</td>
+    <td>{{ docente.cedula }}</td>
+    <td><a href="{% url 'registro_cuestionario' datos.id %}" class="btn btn-success"
+            style="cursor:pointer; color:white;">Evaluar</a></td>
+    {% endif %}
+</tr>
+{% endfor %}
+{% endif %}
+
+
+<!-- directivo -->
+
+{% if directivo %}
+{% for datos in directivo.docente.all %}
+<tr>
+    <td>{{ datos.docente.first_name }}</td>
+    <td>{{ datos.docente.last_name }}</td>
+    <td>{{ datos.cedula}}</td>
+    <td><a href="{% url 'registro_cuestionario' datos.docente_id %}" class="btn btn-success"
+            style="cursor:pointer; color:white;">Evaluar</a></td>
+</tr>
+{% endfor %}
+{% endif %}
 {% endblock tbody %}
 
 {% block actualizarTbl%}

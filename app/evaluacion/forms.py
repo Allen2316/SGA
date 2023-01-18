@@ -9,9 +9,9 @@ class FormularioLogin(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'name':'password'}), label='Contraseña')
 
-class FormularioEleccion(forms.ModelForm):
+class FormularioRespuesta(forms.ModelForm):
     class Meta:
-        model = models.Pregunta
+        model = models.Respuesta
         fields = ['respuesta']
 
         labels = {

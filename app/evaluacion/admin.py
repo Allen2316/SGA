@@ -1,66 +1,39 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
 from app.evaluacion import models
-#from django.contrib.auth.models import User
-# Register your models here.
 
-# Estudiante
-
-
-""" class UsuarioEInline(admin.StackedInline):
-    model = models.Estudiante
+""" class PreguntaInline(admin.TabularInline):
+    model = models.Pregunta
+    extra = 3
 
 
-class UserE_Admin(admin.ModelAdmin):
-    def dni(self, obj):
-        return obj.estudiante.dni
+class Cuestionario_Admin(admin.ModelAdmin):
+    fieldsets = [
+        ('Informacion de fecha', {'fields': [
+         'fecha_pub'], }),
+    ]
+    inlines = [PreguntaInline]
 
-    dni.admin_order_field = 'estudiante'  # permite ordenar
-    dni.short_description = 'DNI'  # renombra el titulo de columna
+    list_display = ('fecha_pub',)
+    list_filter = ['fecha_pub']
+    search_fields = ['texto_pregunta'] """
 
-    @admin.display(description='Nombres')
-    def nombre(obj):
-        return ("%s %s" % (obj.first_name, obj.last_name)).upper()
 
-    inlines = [UsuarioEInline]
+""" class EstudianteInline(admin.StackedInline):
+    model = models.EstudianteAsignaturaDocente
 
-    list_display = ('username', nombre, 'dni')
+
+class UserAdmin(admin.ModelAdmin):
+
+    inlines = [EstudianteInline]
+
+    list_display = ('username','first_name', 'last_name')
     list_filter = ['username']
-    search_fields = ['username', 'dni']
-
-# Docente
+    search_fields = ['username','first_name', 'last_name'] """
 
 
-class UsuarioDoInline(admin.StackedInline):
-    model = models.Docente
-
-
-class UserDo_Admin(admin.ModelAdmin):
-    def dni(self, obj):
-        return obj.docente.dni
-
-    dni.admin_order_field = 'docente'  # permite ordenar
-    dni.short_description = 'DNI'  # renombra el titulo de columna
-
-    @admin.display(description='Nombres')
-    def nombre(obj):
-        return ("%s %s" % (obj.first_name, obj.last_name)).upper()
-
-    inlines = [UsuarioDoInline]
-
-    list_display = ('username', nombre, 'dni')
-    list_filter = ['username']
-    search_fields = ['username', 'dni'] """
-
-
-""" admin.site.register(
-    models.User, UserE_Admin)
-admin.site.register(
-    models.User, UserDo_Admin) """
-#admin.site.register(models.UserDi, UserDi_Admin)
-# admin.site.register(models.Estudiante)
-# admin.site.register(models.Docente)
-# admin.site.register(models.Directivo)
-
+""" admin.site.unregister(User)
+admin.site.register(User, UserAdmin) """
 
 admin.site.register(models.Configuracion)
 admin.site.register(models.PeriodoEvaluacion)
@@ -70,7 +43,7 @@ admin.site.register(models.PeriodoAcademico)
 admin.site.register(models.Evaluacion)
 admin.site.register(models.Pregunta)
 admin.site.register(models.Cuestionario)
-
+admin.site.register(models.Respuesta)
 admin.site.register(models.EstudianteAsignaturaDocente)
 admin.site.register(models.DirectivoAsignaturaDocente)
 admin.site.register(models.DocenteAsignaturaDocente)

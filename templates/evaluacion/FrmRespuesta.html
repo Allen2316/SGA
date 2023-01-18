@@ -15,35 +15,122 @@
 
               {% if error_message %} <p><strong>{{ error_message }}</strong></p> {% endif %}
 
+              <!-- estudiante -->
 
-              {% for e in asignatura.cuestionario.cuestionarios.all %}
-              <div class="custom-control custom-radio custom-control-inline">
-                <div>
-                  <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">{{ e.orden }}.- {{ e.texto }}</label>
-                </div>
-                {% for p in '12345'|make_list %}
-                <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">{{ forloop.counter }}</label>
-                <input type="radio" id="{{ e.id }}eleccion{{ forloop.counter }}" name="{{ e.texto }}" value="{{p}}"
-                  class="custom-control-input">
+              {% if asignatura %}
 
+                {% for e in asignatura.cuestionario.cuestionarios.all %}
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <div>
+                      <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">{{ e.orden }}.-
+                        {{ e.texto }}</label>
+                    </div>
+                      {% for p in '12345'|make_list %}
+
+                        {% if forloop.counter == 1 %}
+                        <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Muy malo</label>
+                        {% elif forloop.counter == 2 %}
+                        <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Malo</label>
+                        {% elif forloop.counter == 3 %}
+                        <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Normal</label>
+                        {% elif forloop.counter == 4 %}
+                        <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Bueno</label>
+                        {% elif forloop.counter == 5 %}
+                        <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Muy Bueno</label>
+
+                        {% endif %}
+
+                        <input type="radio" id="{{ e.id }}eleccion{{ forloop.counter }}" name="{{ e.id }}" value="{{p}}"
+                        class="custom-control-input">
+
+                      {% endfor %}
+                  </div>
                 {% endfor %}
-              </div>
-              {% endfor %}
+              {% endif %}
 
-              <br>
+                <!-- docente -->
+
+                {% if docente %}
+
+                  {% for e in asignatura.cuestionario.cuestionarios.all %}
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <div>
+                        <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">{{ e.orden }}.-
+                          {{ e.texto }}</label>
+                      </div>
+                        {% for p in '12345'|make_list %}
+
+                          {% if forloop.counter == 1 %}
+                          <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Muy malo</label>
+                          {% elif forloop.counter == 2 %}
+                          <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Malo</label>
+                          {% elif forloop.counter == 3 %}
+                          <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Normal</label>
+                          {% elif forloop.counter == 4 %}
+                          <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Bueno</label>
+                          {% elif forloop.counter == 5 %}
+                          <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Muy Bueno</label>
+
+                          {% endif %}
 
 
-              <button type="submit" class="btn btn-success">
-                <i class="fas fa-user"></i> Guardar
-              </button>
+                          <input type="radio" id="{{ e.id }}eleccion{{ forloop.counter }}" name="{{ e.id }}" value="{{p}}"
+                          class="custom-control-input">
 
+                        {% endfor %}
+                    </div>
+                  {% endfor %}
+                {% endif %}
+
+
+                  <!-- directivo -->
+                  {{directivo.cedula}}
+                  {% if directivo %}
+                  {{directivo.cedula}}
+                    {% for e in directivo.docente.all %}
+                    
+                    {% for q in e.cuestionarios.cuestionarios.all  %}
+                      <div class="custom-control custom-radio custom-control-inline">
+                        <div>
+                          <label class="custom-control-label" for="{{ q.id }}eleccion{{ forloop.counter }}">{{ q.orden }}.-
+                            {{ q.texto }}</label>
+                        </div>
+                          {% for p in '12345'|make_list %}
+
+                            {% if forloop.counter == 1 %}
+                            <label class="custom-control-label" for="{{ q.id }}eleccion{{ forloop.counter }}">Muy malo</label>
+                            {% elif forloop.counter == 2 %}
+                            <label class="custom-control-label" for="{{ q.id }}eleccion{{ forloop.counter }}">Malo</label>
+                            {% elif forloop.counter == 3 %}
+                            <label class="custom-control-label" for="{{ q.id }}eleccion{{ forloop.counter }}">Normal</label>
+                            {% elif forloop.counter == 4 %}
+                            <label class="custom-control-label" for="{{ q.id }}eleccion{{ forloop.counter }}">Bueno</label>
+                            {% elif forloop.counter == 5 %}
+                            <label class="custom-control-label" for="{{ q.id }}eleccion{{ forloop.counter }}">Muy Bueno</label>
+
+                            {% endif %}
+
+                          <input type="radio" id="{{ q.id }}eleccion{{ forloop.counter }}" name="{{ q.id }}" value="{{p}}"
+                            class="custom-control-input">
+                          {% endfor %}
+                      </div>
+                      {% endfor %}
+                    {% endfor %}
+                  {% endif %}
+                  <br>
+
+
+                  <button type="submit" class="btn btn-success">
+                    <i class="fas fa-user"></i> Guardar
+                  </button>
+
+                </div>
+            </form>
           </div>
-          </form>
         </div>
-      </div>
 
+      </div>
     </div>
-  </div>
   </div>
 </section>
 {% endblock content %}
