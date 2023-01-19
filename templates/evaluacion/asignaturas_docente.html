@@ -76,10 +76,10 @@ SOY ADMIN
 
     </td>
 
-    {% if voto is not True %}
+    
     <td><a href="{% url 'registro_cuestionario' asignaturas.id %}" class="btn btn-success"
             style="cursor:pointer; color:white;">Evaluar</a></td>
-    {% endif %}
+    
 
 
 </tr>
@@ -96,7 +96,7 @@ SOY ADMIN
     <td>{{ docente.docente.last_name }}</td>
     <td>{{ docente.docente.username }}</td>
     <td>{{ docente.cedula }}</td>
-    <td><a href="{% url 'registro_cuestionario' datos.id %}" class="btn btn-success"
+    <td><a href="{% url 'registro_cuestionario' docente.docente_id %}" class="btn btn-success"
             style="cursor:pointer; color:white;">Evaluar</a></td>
     {% endif %}
 </tr>
@@ -112,8 +112,10 @@ SOY ADMIN
     <td>{{ datos.docente.first_name }}</td>
     <td>{{ datos.docente.last_name }}</td>
     <td>{{ datos.cedula}}</td>
+    
     <td><a href="{% url 'registro_cuestionario' datos.docente_id %}" class="btn btn-success"
             style="cursor:pointer; color:white;">Evaluar</a></td>
+    
 </tr>
 {% endfor %}
 {% endif %}

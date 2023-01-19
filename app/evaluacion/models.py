@@ -266,14 +266,14 @@ class Evaluacion(models.Model):
         Cuestionario, related_name='cuestionario', on_delete=models.CASCADE)
     estudiante = models.ForeignKey(EstudianteAsignaturaDocente, null=True,
                                    blank=True, related_name='ev_estudiante', on_delete=models.CASCADE)
-    docente = models.ForeignKey(DirectivoAsignaturaDocente, null=True,
+    docente = models.ForeignKey(DocenteAsignaturaDocente, null=True,
                                 blank=True, related_name='ev_docente', on_delete=models.CASCADE)
-    directivo = models.ForeignKey(DocenteAsignaturaDocente, null=True,
+    directivo = models.ForeignKey(DirectivoAsignaturaDocente, null=True,
                                   blank=True,  related_name='ev_directivo', on_delete=models.CASCADE)
     totalEvaluacion = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return '{0} - {1}'.format(self.orden, self.texto)
+        return '{0}'.format(self.pk)
 
     class Meta:
         verbose_name = 'Evaluacion'
@@ -282,10 +282,14 @@ class Evaluacion(models.Model):
 
 
 class Tabulacion(models.Model):
-    estTotal = models.IntegerField(null=False)
-    doceTotal = models.IntegerField(null=False)
-    dirTotal = models.IntegerField(null=False)
-    total = models.IntegerField(null=True, blank=True)
+    estTotal = models.DecimalField(
+        default=0, decimal_places=2, max_digits=5, null=False)
+    doceTotal = models.DecimalField(
+        default=0, decimal_places=2, max_digits=5, null=False)
+    dirTotal = models.DecimalField(
+        default=0, decimal_places=2, max_digits=5, null=False)
+    total = models.DecimalField(
+        default=0, decimal_places=2, max_digits=5, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Tabulacion'

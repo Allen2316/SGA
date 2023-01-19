@@ -7,9 +7,16 @@
       <div class="col-12 col-md-12 col-lg-12">
         <div class="card">
           <div class="card-body">
-            <p>
-                         
-              <form method="POST" action="{% url 'voto' user.id docente.docente_id %}">
+            
+            {% if docenteE %}
+            <form method="POST" action="{% url 'voto' user.id docenteE.docente_id %}">
+            {% elif docenteDo %}    
+            <form method="POST" action="{% url 'voto' user.id docenteDo.docente_id %}">
+            {% elif docenteDi %}    
+            <form method="POST" action="{% url 'voto' user.id docenteDi.docente_id %}">
+            {% endif %}
+                                       
+              
               
                 {% csrf_token %}
                 <!-- pregunta[1].eleccion_set.all()  -->
@@ -50,37 +57,38 @@
                 {% endfor %}
                 {% endif %}
 
-                <!-- docente -->
-                <!-- CORREGIR EL ENVIO DE DOCENTE DEBE TENER OTRO NOMBRE PARA QUE NO REPITA LOS FORMS -->
-                {% if docente %}
+                <!-- docente -->                
+                {% if docenteDo %}                
+                {% for e in docenteDo.cuestionarios.all %}
+                {% if forloop.counter == 1 %}
 
-                {% for e in asignatura.cuestionario.cuestionarios.all %}
+                {% for q in e.cuestionarios.all %}
                 <div class="custom-control custom-radio custom-control-inline">
                   <div>
-                    <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">{{ e.orden }}.-
-                      {{ e.texto }}</label>
+                    <label class="custom-control-label" for="{{ q.id }}eleccion{{ forloop.counter }}">{{ q.orden }}.-
+                      {{ q.texto }}</label>
                   </div>
                   {% for p in '12345'|make_list %}
 
                   {% if forloop.counter == 1 %}
-                  <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Muy malo</label>
+                  <label class="custom-control-label" for="{{ q.id }}eleccion{{ forloop.counter }}">Muy malo</label>
                   {% elif forloop.counter == 2 %}
-                  <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Malo</label>
+                  <label class="custom-control-label" for="{{ q.id }}eleccion{{ forloop.counter }}">Malo</label>
                   {% elif forloop.counter == 3 %}
-                  <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Normal</label>
+                  <label class="custom-control-label" for="{{ q.id }}eleccion{{ forloop.counter }}">Normal</label>
                   {% elif forloop.counter == 4 %}
-                  <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Bueno</label>
+                  <label class="custom-control-label" for="{{ q.id }}eleccion{{ forloop.counter }}">Bueno</label>
                   {% elif forloop.counter == 5 %}
-                  <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">Muy Bueno</label>
+                  <label class="custom-control-label" for="{{ q.id }}eleccion{{ forloop.counter }}">Muy Bueno</label>
 
                   {% endif %}
 
-
-                  <input type="radio" id="{{ e.id }}eleccion{{ forloop.counter }}" name="{{ e.id }}" value="{{p}}"
+                  <input type="radio" id="{{ q.id }}eleccion{{ forloop.counter }}" name="{{ q.id }}" value="{{p}}"
                     class="custom-control-input">
-
                   {% endfor %}
                 </div>
+                {% endfor %}
+                {% endif %}
                 {% endfor %}
                 {% endif %}
 
@@ -88,7 +96,7 @@
                 <!-- directivo -->
 
                 {% if directivo %}
-                {% for e in docente.cuestionarios.all %}
+                {% for e in docenteDi.cuestionarios.all %}
                 {% if forloop.counter == 2 %}
 
                 {% for q in e.cuestionarios.all %}
