@@ -157,8 +157,8 @@ CREATE TABLE IF NOT EXISTS `auth_user` (
 DELETE FROM `auth_user`;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-	(1, 'pbkdf2_sha256$390000$pkC52f5Mz1GHaQwzfGjRl0$RuMjDtjrpjAdSA38U3BmsIjhKMx5pc5VNXET0IlvZJI=', '2023-01-20 01:19:51.727379', 1, 'allen', '', '', '', 1, 1, '2023-01-18 03:36:36.767070'),
-	(2, 'pbkdf2_sha256$390000$zMQmXpEzAFmNNICtLBwJ3Z$ilwSDMOq8R8i6+wd62n/Hjpa7GsOBYMA8ZidE410eCk=', '2023-01-20 02:23:33.264962', 0, 'estudiante1_', 'Luis', 'Sarmiento', '', 0, 1, '2023-01-18 03:40:44.000000'),
+	(1, 'pbkdf2_sha256$390000$pkC52f5Mz1GHaQwzfGjRl0$RuMjDtjrpjAdSA38U3BmsIjhKMx5pc5VNXET0IlvZJI=', '2023-01-20 20:33:23.438291', 1, 'allen', '', '', '', 1, 1, '2023-01-18 03:36:36.767070'),
+	(2, 'pbkdf2_sha256$390000$zMQmXpEzAFmNNICtLBwJ3Z$ilwSDMOq8R8i6+wd62n/Hjpa7GsOBYMA8ZidE410eCk=', '2023-01-20 21:07:31.128256', 0, 'estudiante1_', 'Luis', 'Sarmiento', '', 0, 1, '2023-01-18 03:40:44.000000'),
 	(3, 'pbkdf2_sha256$390000$tTjmjRobtJ5MFT3Kd1UQvz$blFExf6zS7tsFsUVNLWRfmfZoINVyyhUssRNyV3qK68=', '2023-01-20 01:21:07.480140', 0, 'docente1_', 'Pedro', 'Martinez', '', 0, 1, '2023-01-18 05:53:45.000000'),
 	(4, 'pbkdf2_sha256$390000$g0N53VYUxns8qhVdlZyzOw$aA/DaBxMDrVmK0bzhR7/huD9frmzvZuEMCp3bAjBH80=', '2023-01-20 01:20:12.155872', 0, 'directivo1_', 'alfonso', 'monteros', '', 0, 1, '2023-01-18 06:31:40.000000'),
 	(5, 'pbkdf2_sha256$390000$owbWqmNqdnpSdufeVD9yJD$JWPvviLNoP8tUWifpT12yX6gaap850cexl3SHTxSr8c=', NULL, 0, 'docente2_', 'Francis', 'Franco', '', 0, 1, '2023-01-18 07:40:41.000000'),
@@ -370,20 +370,21 @@ CREATE TABLE IF NOT EXISTS `django_session` (
   KEY `django_session_expire_date_a5c62663` (`expire_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla evaluacion.django_session: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla evaluacion.django_session: ~11 rows (aproximadamente)
 DELETE FROM `django_session`;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 	('586qekp6uegu3k37hv0o4fm4e5dbaw70', '.eJxVjE0OwiAYBe_C2pDyW3Dp3jOQxwdI1dCktCvj3bVJF7p9M_NeLGBba9h6XsKU2JlpdvrdIuiR2w7SHe02c5rbukyR7wo_aOfXOeXn5XD_Dip6_daSvCUtVDEgSw6pyEIqSyeyGx2AJGC9N9JoqDg6D2g72FKKEkOWlr0_-_A4OA:1pI5vY:VsaAzm96zPVaxyhCQE1q6PIwlrfdFs7_SQzIVLRY9Us', '2023-02-01 10:44:20.562954'),
 	('65ptqs4stbamzn23msrrxrtmd237fzr2', '.eJxVjDsOwyAQRO9CHSG-a5Myvc-AFliCkwgkY1dR7h5bcpGUM-_NvJnHbS1-67T4ObErk-zy2wWMT6oHSA-s98Zjq-syB34o_KSdTy3R63a6fwcFe9nXJooURzIiuBgGR0IiJlAmg1KKcgQLNiNopzNpA2AGhD1Zo-WotSP2-QLrZDdR:1pIbVw:sDj7-hEsVGNFTynr5d9VoYVM2VGfFE-j9RtltbPgJDo', '2023-02-02 20:28:00.108991'),
 	('6jhj685caf16cmxfc5ljnkjl4fs2tdq8', '.eJxVjEEOwiAQRe_C2pBhSgdw6d4zNFOGStVAUtqV8e7apAvd_vfef6mBtzUPW0vLMIs6q06dfreR4yOVHcidy63qWMu6zKPeFX3Qpq9V0vNyuH8HmVv-1mMvPQQIiU3naOosBucQxCZipgTB4-SiM_3kkcBz8AJI6IisEQio3h-9oTZl:1pI2eB:qqn0cJrMuCLBX04fuv4jQAd0i__GNdhZufTIR5b_47g', '2023-02-01 07:14:11.507237'),
+	('8jgqewv0vwotn1vdrjbi3kmi32dnhc0x', '.eJxVjEEOwiAQRe_C2hCEEapL956BDDODVA0kpV0Z726bdKHb_977bxVxmUtcukxxZHVRVh1-t4T0lLoBfmC9N02tztOY9KbonXZ9ayyv6-7-HRTsZa29kBuMA4As1guY4Jk4IUiykG0YGAQpp9OZDIZ8DICrioZJsiN26vMF-rA5GA:1pIybj:b-a3UPX4UjoF4O0nrywnkhHkgAkZ71vstn0tKZ2_drI', '2023-02-03 21:07:31.131257'),
 	('bncp5qau4b3tkol8dlvccis4tamouthh', '.eJxVjEEOwiAQRe_C2hCEEapL956BDDODVA0kpV0Z726bdKHb_977bxVxmUtcukxxZHVRVh1-t4T0lLoBfmC9N02tztOY9KbonXZ9ayyv6-7-HRTsZa29kBuMA4As1guY4Jk4IUiykG0YGAQpp9OZDIZ8DICrioZJsiN26vMF-rA5GA:1pIZXK:t460nOW3oIm3ueMxHrqFzNiNjfYw7rHtFyFCj3cyg_4', '2023-02-02 18:21:18.361781'),
 	('dj6fk2trbqxsk95ihntfdcvxcs0hyptl', '.eJxVjDsOwyAQRO9CHSG-a5Myvc-AFliCkwgkY1dR7h5bcpGUM-_NvJnHbS1-67T4ObErk-zy2wWMT6oHSA-s98Zjq-syB34o_KSdTy3R63a6fwcFe9nXJooURzIiuBgGR0IiJlAmg1KKcgQLNiNopzNpA2AGhD1Zo-WotSP2-QLrZDdR:1pI3ji:r_HuxpCakWq5D5pbzmTEc0mf2AcQ2rPgHqeTH2GkQPw', '2023-02-01 08:23:58.765286'),
 	('fdwtuu2irxb2z4vtvz4jbmv1pvcgmjg6', '.eJxVjDsOwyAQRO9CHSG-a5Myvc-AFliCkwgkY1dR7h5bcpGUM-_NvJnHbS1-67T4ObErk-zy2wWMT6oHSA-s98Zjq-syB34o_KSdTy3R63a6fwcFe9nXJooURzIiuBgGR0IiJlAmg1KKcgQLNiNopzNpA2AGhD1Zo-WotSP2-QLrZDdR:1pIMYB:TCXoIENZLzC1H5XiinjLQfOUxAPl7g7zEccRw1R1IYE', '2023-02-02 04:29:19.734709'),
 	('isrglr69im2oj6fb7lcv24kf6m6ydhf3', '.eJxVjDsOwyAQRO9CHSG-a5Myvc-AFliCkwgkY1dR7h5bcpGUM-_NvJnHbS1-67T4ObErk-zy2wWMT6oHSA-s98Zjq-syB34o_KSdTy3R63a6fwcFe9nXJooURzIiuBgGR0IiJlAmg1KKcgQLNiNopzNpA2AGhD1Zo-WotSP2-QLrZDdR:1pI1Fy:-CAu9ygP967FIVCmyTWx9_Ea3v_eBpFyDzd7meNX11o', '2023-02-01 05:45:06.731867'),
 	('jww8cuzebzlm0rklfz7np6al0raxa8b1', '.eJxVjDsOwyAQRO9CHSG-a5Myvc-AFliCkwgkY1dR7h5bcpGUM-_NvJnHbS1-67T4ObErk-zy2wWMT6oHSA-s98Zjq-syB34o_KSdTy3R63a6fwcFe9nXJooURzIiuBgGR0IiJlAmg1KKcgQLNiNopzNpA2AGhD1Zo-WotSP2-QLrZDdR:1pIg4N:KiHcxw1-Qt4ksRp1o-Yn9MSsyiuAqe-XtZoO1KcNRf0', '2023-02-03 01:19:51.734381'),
-	('r92du3m2oau43hl9f9o72yo1eqro6g9u', '.eJxVjDsOwyAQRO9CHSG-a5Myvc-AFliCkwgkY1dR7h5bcpGUM-_NvJnHbS1-67T4ObErk-zy2wWMT6oHSA-s98Zjq-syB34o_KSdTy3R63a6fwcFe9nXJooURzIiuBgGR0IiJlAmg1KKcgQLNiNopzNpA2AGhD1Zo-WotSP2-QLrZDdR:1pIYfp:GErnzjbEc3dQHIqLskGQaHflkIJ8i-MB-b5joqueAUs', '2023-02-02 17:26:01.189036'),
-	('tht8l7wuh154d9jghe07tuo5tzo0krlv', '.eJxVjEEOwiAQRe_C2hCEEapL956BDDODVA0kpV0Z726bdKHb_977bxVxmUtcukxxZHVRVh1-t4T0lLoBfmC9N02tztOY9KbonXZ9ayyv6-7-HRTsZa29kBuMA4As1guY4Jk4IUiykG0YGAQpp9OZDIZ8DICrioZJsiN26vMF-rA5GA:1pIh41:Rn9mYXHothD2ebmiySLmgqzAXkgJNX-XXrDqGegi5V4', '2023-02-03 02:23:33.268859');
+	('pa0kg89w6c2gzvfeg14fiayr9h70tuzb', '.eJxVjDsOwyAQRO9CHSG-a5Myvc-AFliCkwgkY1dR7h5bcpGUM-_NvJnHbS1-67T4ObErk-zy2wWMT6oHSA-s98Zjq-syB34o_KSdTy3R63a6fwcFe9nXJooURzIiuBgGR0IiJlAmg1KKcgQLNiNopzNpA2AGhD1Zo-WotSP2-QLrZDdR:1pIy4h:ifkvByJlSlcwuBWJw5W0_Zvt9IKtfRkkKTqeEzPM2Wo', '2023-02-03 20:33:23.442291'),
+	('r92du3m2oau43hl9f9o72yo1eqro6g9u', '.eJxVjDsOwyAQRO9CHSG-a5Myvc-AFliCkwgkY1dR7h5bcpGUM-_NvJnHbS1-67T4ObErk-zy2wWMT6oHSA-s98Zjq-syB34o_KSdTy3R63a6fwcFe9nXJooURzIiuBgGR0IiJlAmg1KKcgQLNiNopzNpA2AGhD1Zo-WotSP2-QLrZDdR:1pIYfp:GErnzjbEc3dQHIqLskGQaHflkIJ8i-MB-b5joqueAUs', '2023-02-02 17:26:01.189036');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 
 -- Volcando estructura para tabla evaluacion.evaluacion_asignatura
@@ -628,14 +629,11 @@ CREATE TABLE IF NOT EXISTS `evaluacion_evaluacion` (
   CONSTRAINT `evaluacion_evaluacio_directivo_id_9a4b8bda_fk_evaluacio` FOREIGN KEY (`directivo_id`) REFERENCES `evaluacion_directivoasignaturadocente` (`directivo_id`),
   CONSTRAINT `evaluacion_evaluacio_docente_id_dbfc66a9_fk_evaluacio` FOREIGN KEY (`docente_id`) REFERENCES `evaluacion_docenteasignaturadocente` (`docente_id`),
   CONSTRAINT `evaluacion_evaluacio_estudiante_id_cc62728d_fk_evaluacio` FOREIGN KEY (`estudiante_id`) REFERENCES `evaluacion_estudianteasignaturadocente` (`estudiante_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla evaluacion.evaluacion_evaluacion: ~0 rows (aproximadamente)
 DELETE FROM `evaluacion_evaluacion`;
 /*!40000 ALTER TABLE `evaluacion_evaluacion` DISABLE KEYS */;
-INSERT INTO `evaluacion_evaluacion` (`id`, `totalEvaluacion`, `cuestionario_id`, `directivo_id`, `docente_id`, `estudiante_id`) VALUES
-	(1, 3.33, 1, NULL, 3, 2),
-	(2, 2.33, 1, NULL, 5, 2);
 /*!40000 ALTER TABLE `evaluacion_evaluacion` ENABLE KEYS */;
 
 -- Volcando estructura para tabla evaluacion.evaluacion_periodoacademico
@@ -713,27 +711,11 @@ CREATE TABLE IF NOT EXISTS `evaluacion_respuesta` (
   PRIMARY KEY (`id`),
   KEY `evaluacion_respuesta_pregunta_id_db7bed3b_fk_evaluacio` (`pregunta_id`),
   CONSTRAINT `evaluacion_respuesta_pregunta_id_db7bed3b_fk_evaluacio` FOREIGN KEY (`pregunta_id`) REFERENCES `evaluacion_pregunta` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla evaluacion.evaluacion_respuesta: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla evaluacion.evaluacion_respuesta: ~0 rows (aproximadamente)
 DELETE FROM `evaluacion_respuesta`;
 /*!40000 ALTER TABLE `evaluacion_respuesta` DISABLE KEYS */;
-INSERT INTO `evaluacion_respuesta` (`id`, `respuesta`, `pregunta_id`) VALUES
-	(1, '1', 1),
-	(2, '3', 2),
-	(3, '5', 3),
-	(4, '2', 1),
-	(5, '3', 2),
-	(6, '4', 3),
-	(7, '2', 1),
-	(8, '3', 2),
-	(9, '3', 3),
-	(10, '2', 1),
-	(11, '3', 2),
-	(12, '5', 3),
-	(13, '1', 1),
-	(14, '2', 2),
-	(15, '4', 3);
 /*!40000 ALTER TABLE `evaluacion_respuesta` ENABLE KEYS */;
 
 -- Volcando estructura para tabla evaluacion.evaluacion_tabulacion
@@ -747,15 +729,11 @@ CREATE TABLE IF NOT EXISTS `evaluacion_tabulacion` (
   PRIMARY KEY (`id`),
   KEY `evaluacion_tabulacio_docente_id_9d4155f1_fk_evaluacio` (`docente_id`),
   CONSTRAINT `evaluacion_tabulacio_docente_id_9d4155f1_fk_evaluacio` FOREIGN KEY (`docente_id`) REFERENCES `evaluacion_docenteasignaturadocente` (`docente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla evaluacion.evaluacion_tabulacion: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla evaluacion.evaluacion_tabulacion: ~0 rows (aproximadamente)
 DELETE FROM `evaluacion_tabulacion`;
 /*!40000 ALTER TABLE `evaluacion_tabulacion` DISABLE KEYS */;
-INSERT INTO `evaluacion_tabulacion` (`id`, `estTotal`, `docTotal`, `dirTotal`, `total`, `docente_id`) VALUES
-	(3, 3.33, 0.00, 0.00, 1.11, 3),
-	(5, 2.83, 0.00, 0.00, 0.94, 5),
-	(6, 3.00, 0.00, 0.00, 1.00, 6);
 /*!40000 ALTER TABLE `evaluacion_tabulacion` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

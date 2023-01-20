@@ -89,35 +89,35 @@ def vista_cuestionario(request, pk):
         if request.user.estudiante.is_estudiante:
 
             estudiante = models.EstudianteAsignaturaDocente.objects.get(pk=pk)
-
-            tab = models.Evaluacion.objects.all().exclude(
-                estudiante=None)
-
-            doc = estudiante.carrera.asignatura_set.all()
-
-            lista = list()
-            
-            re = False
-            for d in doc:
-                print(d.asignatura.first().pk)
-                for e in tab:
-                    print(e.docente.pk)
-                    if e.docente.pk == d.asignatura.first().pk:                        
-                        re= True                    
-                        print(re)
-                print('\n')
-                if re == False:
-                    print(re)
-                    print(d)
-                
-
-            """ for i in lista:
-                print(i) """
-                
             data = {
                 'estudiante': estudiante,
-                'voto': tab
             }
+            try:
+                tab = models.Evaluacion.objects.all().exclude(
+                    estudiante=None)
+
+                doc = estudiante.carrera.asignatura_set.all()
+
+                lista = list()
+
+                for d in doc:
+                    re = False
+                    for e in tab:
+                        if e.docente.pk == d.asignatura.first().pk:
+                            re = True
+                            continue
+                    if re == False:
+                        lista.append(d)
+
+                if len(lista) == 0:
+                    data = {
+                        'errorV': 'Encuesta realizada',
+                    }
+
+            except:
+                pass
+            else:
+                data['voto'] = lista
 
     except:
         try:

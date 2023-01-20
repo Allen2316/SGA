@@ -28,7 +28,7 @@ SOY ADMIN
 
 {% block thead %}
 
-{% if estudiante.is_estudiante or voto %}
+{% if estudiante.is_estudiante %}
 <tr>
     <th>Ciclo </th>
     <th>Paralelo</th>
@@ -63,7 +63,30 @@ SOY ADMIN
 
 <!-- asignatura -->
 
-{% if estudiante %}
+{% if voto %}
+
+{% for asignaturas in voto %}
+<tr>
+    
+    <td>{{ asignaturas.semestre }}</td>
+    <td>{{ asignaturas.paralelo }}</td>
+    <td>{{ asignaturas.nombre }}</td>
+    <td>
+        {% for p in asignaturas.asignatura.all %}
+        {{p.docente.first_name }} {{p.docente.last_name }}
+        {% endfor %}
+    </td>
+    <td> 
+        <a href="{% url 'registro_cuestionario' asignaturas.id %}" class="btn btn-success"
+        style="cursor:pointer; color:white;">Evaluar</a>          
+    </td>
+</tr>
+{% endfor %}
+
+{% elif errorV %}
+<td>{{errorV}}</td>
+
+{% else %}
 {% for asignaturas in estudiante.carrera.asignatura_set.all %}
 <tr>
     <td>{{ asignaturas.semestre }}</td>
@@ -73,29 +96,13 @@ SOY ADMIN
         {% for p in asignaturas.asignatura.all %}
         {{p.docente.first_name }} {{p.docente.last_name }}
         {% endfor %}
-
     </td>
-    <td>
-        {% if voto %}
-            {% for es in voto %}
-                {% if asignaturas.asignatura.first.pk == es.docente.pk %}
-                    Evaluado
-                {% else %}
-                    <a href="{% url 'registro_cuestionario' asignaturas.id %}" class="btn btn-success"
-                        style="cursor:pointer; color:white;">Evaluar</a>
-                {% endif %}
-            {% endfor %}
-        {% else %}
-            <a href="{% url 'registro_cuestionario' asignaturas.id %}" class="btn btn-success"
+    <td>     
+        <a href="{% url 'registro_cuestionario' asignaturas.id %}" class="btn btn-success"
                 style="cursor:pointer; color:white;">Evaluar</a>
-        {% endif %}
-
-
     </td>
-
 </tr>
 {% endfor %}
-
 
 {% endif %}
 

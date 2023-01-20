@@ -197,7 +197,7 @@ class DocenteAsignaturaDocente(models.Model):
         Cuestionario, blank=True)
 
     def __str__(self):
-        return '{0} - {1} {2}|{3}'.format(self.cedula, self.docente.first_name, self.asignatura.nombre, self.asignatura.carrera.nombre)
+        return '{0} | {1} - {2} ->| {3}| <-{4}'.format(self.pk,self.cedula, self.docente.first_name, self.asignatura.nombre, self.asignatura.carrera.nombre)
 
     class Meta:
         verbose_name = 'Docente'
