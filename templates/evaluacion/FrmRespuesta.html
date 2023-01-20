@@ -28,7 +28,7 @@
 
                 {% if asignatura %}
 
-                {% for e in asignatura.cuestionario.cuestionarios.all %}
+                {% for e in asignatura.cuestionario.cuestionarios.all %}                
                 <div class="custom-control custom-radio custom-control-inline">
                   <div>
                     <label class="custom-control-label" for="{{ e.id }}eleccion{{ forloop.counter }}">{{ e.orden }}.-

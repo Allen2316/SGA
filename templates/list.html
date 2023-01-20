@@ -3,42 +3,48 @@
 
 
 {% block content %}
-<section class="section">
-    <section class="section">
+{% block seccion %}
+{% endblock %}
 
-    
-        {% block tituloLista %}
-        {% endblock %}
-    </section>  
-    <div class="section-body">
-        {% block titulo %}
+<section class="section ">
 
-        {% endblock titulo %}
-        <div class="row">
-            <div class="col-12 col-md-6 col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-md" id="data">
-                                <thead>
-                                    {% block thead %}
 
-                                    {% endblock thead %}
-                                </thead>
+    {% block tituloLista %}
+    {% endblock %}
+</section>
+<div class="section-body">
+    {% block titulo %}
 
-                                <tbody>
-                                    {% block tbody %}
+    {% endblock titulo %}
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-md" id="data">
+                            <thead>
+                                {% block thead %}
 
-                                    {% endblock tbody %}
-                                </tbody>
-                            </table>
-                        </div>
+                                {% endblock thead %}
+                            </thead>
+
+                            <tbody>
+                                {% block tbody %}
+
+                                {% endblock tbody %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {% block actualizarTbl%}    
-    {% endblock %}
+</div>
+<section class="section accion text-center">
+
+    {% block actualizarTbl%}
+{% endblock %}
 </section>
+
+
 {% endblock content %}

@@ -96,14 +96,27 @@ class Cuestionario(models.Model):
         verbose_name_plural = 'Cuestionarios'
 
 
-class Asignatura(models.Model):
-    carrera = models.CharField(max_length=100)
-    semestre = models.CharField(max_length=10, verbose_name='ciclo')
-    paralelo = models.CharField(max_length=50)
-    nombre = models.TextField()
-    duracion = models.FloatField(verbose_name='duración en horas')
+class Carrera(models.Model):
+    nombre = models.CharField(max_length=100, null=False)
     periodoAcademico = models.ForeignKey(PeriodoAcademico, related_name='periodoAcademico',
                                          verbose_name='Periodo Académico', on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Carrera'
+        verbose_name_plural = 'Carreras'
+
+    def __str__(self):
+
+        return self.nombre
+
+
+class Asignatura(models.Model):
+    carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
+    semestre = models.CharField(max_length=10, verbose_name='ciclo')
+    paralelo = models.CharField(max_length=50)
+    nombre = models.TextField(max_length=100)
+    duracion = models.FloatField(verbose_name='duración en horas')
+
     estadoAsignatura = models.BooleanField(default=True)
 
     cuestionario = models.ForeignKey(
@@ -157,15 +170,15 @@ class EstudianteAsignaturaDocente(models.Model):
     cedula = models.CharField(max_length=10, null=False, unique=True)
     is_estudiante = models.BooleanField(default=True, null=False)
 
-    asignaturaEstudiante = models.ManyToManyField(
-        Asignatura, related_name='estudiantesAsignaturaDocente', verbose_name='Estudiante - Docente')
+    carrera = models.ForeignKey(
+        Carrera, verbose_name='Carrera', on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{0} - {1}'.format(self.estudiante.first_name, self.asignaturaEstudiante.all())
+        return '{0} - {1}'.format(self.estudiante.first_name, self.carrera.asignatura_set.all())
 
     class Meta:
-        verbose_name = 'EstudianteAsignaturaDocente'
-        verbose_name_plural = 'EstudianteAsignaturaDocentes'
+        verbose_name = 'Estudiante'
+        verbose_name_plural = 'Estudiantes'
 
 
 # Docente
@@ -177,18 +190,18 @@ class DocenteAsignaturaDocente(models.Model):
 
     cedula = models.CharField(max_length=10, null=False, unique=True)
 
-    asignaturas = models.ManyToManyField(
-        Asignatura, related_name='docenteAsignaturaDocente', verbose_name='Autoevaluacion - Docente')
+    asignatura = models.ForeignKey(
+        Asignatura, verbose_name='Asignatura del docente', related_name='asignatura', on_delete=models.CASCADE)
 
     cuestionarios = models.ManyToManyField(
         Cuestionario, blank=True)
 
     def __str__(self):
-        return '{0} - {1}'.format(self.docente.first_name, self.asignaturas.all())
+        return '{0} - {1} {2}|{3}'.format(self.cedula, self.docente.first_name, self.asignatura.nombre, self.asignatura.carrera.nombre)
 
     class Meta:
-        verbose_name = 'Asignatura'
-        verbose_name_plural = 'AsignaturasDocentes'
+        verbose_name = 'Docente'
+        verbose_name_plural = 'Docentes'
 
 
 # Directivo
@@ -209,8 +222,8 @@ class DirectivoAsignaturaDocente(models.Model):
         return '%s %s (%s)' % (self.directivo.first_name, self.directivo.last_name, self.directivo.username)
 
     class Meta:
-        verbose_name = 'DirectivoAsignaturaDocente'
-        verbose_name_plural = 'DirectivoAsignaturaDocentes'
+        verbose_name = 'Directivo'
+        verbose_name_plural = 'Directivos'
 
 
 # ===================================================================================================
@@ -270,7 +283,8 @@ class Evaluacion(models.Model):
                                 blank=True, related_name='ev_docente', on_delete=models.CASCADE)
     directivo = models.ForeignKey(DirectivoAsignaturaDocente, null=True,
                                   blank=True,  related_name='ev_directivo', on_delete=models.CASCADE)
-    totalEvaluacion = models.IntegerField(null=True, blank=True)
+    totalEvaluacion = models.DecimalField(
+        max_digits=5, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
         return '{0}'.format(self.pk)
@@ -282,9 +296,11 @@ class Evaluacion(models.Model):
 
 
 class Tabulacion(models.Model):
+    docente = models.ForeignKey(
+        DocenteAsignaturaDocente, null=False, on_delete=models.CASCADE)
     estTotal = models.DecimalField(
         default=0, decimal_places=2, max_digits=5, null=False)
-    doceTotal = models.DecimalField(
+    docTotal = models.DecimalField(
         default=0, decimal_places=2, max_digits=5, null=False)
     dirTotal = models.DecimalField(
         default=0, decimal_places=2, max_digits=5, null=False)

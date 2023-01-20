@@ -1,29 +1,24 @@
-{% extends "base.html" %}
-
+{% extends 'list.html' %}
 {% load static %}
-{% block content %}
 
-<section class="section section-lg bg-tertiary">
+{% block seccion %}
+<style>
+  @media print {
+      .accion {
+          display: none;
+      }
+  }
+</style>
+
+<section class="section section-lg bg-tertiary accion">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 text-center text-white">
-        {{ userE.is_estudiante }}
-        asdasd
-
-        {% if user.is_authenticated and user.estudiante.is_estudiante %}
-        <h1>xxx Estudiante xxx</h1>
-        
-        {% endif %}
-        {% if user.is_authenticated and user.estudiante.is_estudiante %}
-        SOY PROFESOR
-
-        {% elif user.is_authenticated and user.is_estudiante %}
-        SOY ESTUDIANTE
-
-        {% elif user.is_authenticated and user.is_directivo %}
-        SOY DIRECTIVO
-        {% else %}
-        SOY ADMIN
+       
+        {% if user.is_authenticated and user.is_superuser %}
+       
+        <h1>Administrador {{user.first_name}} {{user.last_name}} {{user.username}}</h1> <h2>Bienvenido</h2>
+        <h4>Seccion de tabulaciones de encuestas realizadas</h4>
         {% endif %}
 
         
@@ -31,4 +26,64 @@
     </div>
   </div>
 </section>
-{% endblock content %}
+{% endblock %}
+
+
+{% if error %}
+  
+
+<p>{{ Error }}</p>
+
+{% endif %}
+  
+
+{% block tituloLista %}
+<h1>Lista de Resultados</h1>
+{% endblock %}
+
+{% block titulo %}
+ <h3>El docente mejor evaluado: <code>{{docente.docente.first_name}} {{docente.docente.last_name}}</code></h3>
+{% endblock titulo %}
+
+{% block thead %}
+<tr>
+    <th>Nombres</th>
+    <th>Apellidos</th>
+    <th>Cedula</th>
+    <th>Asignatura</th>
+    <th>Calificación Estudiantes</th>
+    <th>Calificación Directivos</th>
+    <th>Autoevaluacion</th>
+    <th>Calificación General</th>
+</tr>
+{% endblock thead %}
+
+{% block tbody %}
+
+
+{% if tabulacion %}
+{% for t in tabulacion %}
+<tr>
+    <td>{{t.docente.docente.first_name}}</td>
+    <td>{{t.docente.docente.last_name}}</td>
+    <td>{{t.docente.cedula}}</td>       
+    <td>{{t.docente.asignatura.nombre}}</td>    
+    <td>{{t.estTotal}} /5</td>
+    <td>{{t.dirTotal}} /5</td>
+    <td>{{t.docTotal}} /5</td>
+    <td>{{t.total}} /5</td>
+</tr>
+{% endfor %}
+{% else %}
+<td>No existe ningun registro de encuestas a docentes</td>
+{% endif %}
+
+{% endblock tbody %}
+
+{% block actualizarTbl%}
+<div class="section-footer bg-whitesmoke br">
+    <a class="btn btn-success" href="{% url 'dashboard' %}" style="cursor:pointer; color:white;"></i>
+        Actualizar</a>
+        <button type="button" class="btn btn-primary" onclick="print()">Imprimir</button>
+</div>
+{% endblock %}

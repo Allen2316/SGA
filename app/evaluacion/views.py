@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
-from django.db.models import Avg, Sum
+from django.db.models import Avg, Sum, Max
 
 # Create your views here.
 
@@ -36,7 +36,10 @@ def logueo(request):
                 if user.is_active:
                     login(request, user)
                     context = {'pk': user.pk}
-                    return HttpResponseRedirect(reverse('vista_cuestionario', args=[str(user.id)]))
+                    if request.user.is_superuser:
+                        return HttpResponseRedirect(reverse('dashboard'))
+                    else:
+                        return HttpResponseRedirect(reverse('vista_cuestionario', args=[str(user.id)]))
                 else:
                     return HttpResponseRedirect(reverse('noactivo.html'))
             else:
@@ -51,7 +54,27 @@ def logueo(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'evaluacion/dashboard.html')
+    data = {}
+    try:
+        tabulacion = models.Tabulacion.objects.all()
+
+        # obtener el resultado mayo
+        doc = models.Tabulacion.objects.aggregate(Max('total'))['total__max']
+        print(doc)
+        # obtener la tabulacion que contiene el docente con el resultado mayor
+        ta = models.Tabulacion.objects.filter(total=doc).first()
+        # obtener el docente ganador o mejor puntuado
+        docente_g = models.DocenteAsignaturaDocente.objects.get(
+            pk=ta.docente.pk)
+
+    except:
+        data = {'error': 'Error no existe niguna encuesta respondida'}
+    else:
+        data = {
+            'tabulacion': tabulacion,
+            'docente': docente_g,
+        }
+    return render(request, 'evaluacion/dashboard.html', data)
 
 
 @login_required
@@ -66,16 +89,47 @@ def vista_cuestionario(request, pk):
         if request.user.estudiante.is_estudiante:
 
             estudiante = models.EstudianteAsignaturaDocente.objects.get(pk=pk)
+
+            tab = models.Evaluacion.objects.all().exclude(
+                estudiante=None)
+
+            doc = estudiante.carrera.asignatura_set.all()
+
+            lista = list()
+            
+            re = False
+            for d in doc:
+                print(d.asignatura.first().pk)
+                for e in tab:
+                    print(e.docente.pk)
+                    if e.docente.pk == d.asignatura.first().pk:                        
+                        re= True                    
+                        print(re)
+                print('\n')
+                if re == False:
+                    print(re)
+                    print(d)
+                
+
+            """ for i in lista:
+                print(i) """
+                
             data = {
                 'estudiante': estudiante,
+                'voto': tab
             }
+
     except:
         try:
             if request.user.docente.is_docente:
                 docente = models.DocenteAsignaturaDocente.objects.get(pk=pk)
 
+                tab = models.Evaluacion.objects.all().filter(
+                    estudiante=None, directivo=None, docente=docente)
+
                 data = {
                     'docente': docente,
+                    'voto': tab,
                 }
 
         except:
@@ -102,7 +156,7 @@ def registro_cuestionario(request, pk):
         if request.user.estudiante.is_estudiante:
             asignatura = models.Asignatura.objects.get(pk=pk)
             docente = models.DocenteAsignaturaDocente.objects.get(
-                asignaturas=asignatura)
+                asignatura=asignatura)
             print(asignatura)
             data = {
                 'asignatura': asignatura,
@@ -197,111 +251,103 @@ def voto(request, pk, docente_id):
     cuestionario = models.Cuestionario.objects.get(
         pk=pregunta.cuestionario.pk)
     print(cuestionario)
-    """ total = models.Respuesta.objects.filter(
-        pregunta__cuestionario__pk=cuestionario.pk).aggregate(Sum('respuesta')) """
+
+    docente = models.DocenteAsignaturaDocente.objects.get(
+        pk=docente_id)
 
     try:
         if request.user.estudiante.is_estudiante:
             estudiante = models.EstudianteAsignaturaDocente.objects.get(
                 pk=pk)
-
-            docente = models.DocenteAsignaturaDocente.objects.get(
-                pk=docente_id)
             print(docente)
 
+            pre = models.Pregunta.objects.filter(
+                cuestionario=cuestionario).count()
+
             evaluacion = models.Evaluacion(
-                cuestionario=pregunta.cuestionario, estudiante=estudiante, docente=docente, totalEvaluacion=total)
+                cuestionario=pregunta.cuestionario, estudiante=estudiante, docente=docente, totalEvaluacion=total/pre)
             evaluacion.save()
 
             tot = models.Evaluacion.objects.all().exclude(
                 estudiante=None).aggregate(Sum('totalEvaluacion'))
-            count = models.Evaluacion.objects.all().exclude(estudiante=None).count()
 
+            count = models.Evaluacion.objects.all().exclude(estudiante=None).count()
             estTotal = tot['totalEvaluacion__sum'] / count
 
-            idTab = models.PeriodoEvaluacion.objects.latest('id')
             obj, created = models.Tabulacion.objects.get_or_create(
-                id=idTab.pk,
-                defaults={'estTotal': estTotal},
+                id=docente.pk,
+                defaults={'docente': docente},
             )
+
             obj.estTotal = estTotal
             obj.save()
-
-            """ estudiante.voto = True
-            estudiante.save() """
 
     except:
         try:
             if request.user.docente.is_docente:
-                docente = models.DocenteAsignaturaDocente.objects.get(
-                    pk=pk)
+
+                pre = models.Pregunta.objects.filter(
+                    cuestionario=cuestionario).count()
 
                 evaluacion = models.Evaluacion(
-                    cuestionario=cuestionario, docente=docente, totalEvaluacion=total)
+                    cuestionario=cuestionario, docente=docente, totalEvaluacion=total/pre)
                 evaluacion.save()
 
                 tot = models.Evaluacion.objects.all().filter(
-                    directivo=None, estudiante=None).aggregate(Sum('totalEvaluacion'))
-                count = models.Evaluacion.objects.all().filter(
-                    directivo=None, estudiante=None).count()
+                    estudiante=None, directivo=None).aggregate(Sum('totalEvaluacion'))
 
+                count = models.Evaluacion.objects.all().filter(
+                    estudiante=None, directivo=None).count()
                 estTotal = tot['totalEvaluacion__sum'] / count
 
-                idTab = models.PeriodoEvaluacion.objects.latest('id')
                 obj, created = models.Tabulacion.objects.get_or_create(
-                    id=idTab.pk,
-                    defaults={'doceTotal': estTotal},
+                    id=docente.pk,
+                    defaults={'docente': docente},
                 )
-                obj.doceTotal = estTotal
+                obj.docTotal = estTotal
                 obj.save()
 
-                """ docente.voto = True
-                docente.save() """
         except:
             try:
                 if request.user.directivo.is_directivo:
                     directivo = models.DirectivoAsignaturaDocente.objects.get(
                         pk=pk)
 
-                    docente = models.DocenteAsignaturaDocente.objects.get(
-                        pk=docente_id)
+                    pre = models.Pregunta.objects.filter(
+                        cuestionario=cuestionario).count()
 
                     evaluacion = models.Evaluacion(
-                        cuestionario=pregunta.cuestionario,  docente=docente, directivo=directivo, totalEvaluacion=total)
+                        cuestionario=pregunta.cuestionario,  docente=docente, directivo=directivo, totalEvaluacion=total/pre)
                     evaluacion.save()
 
                     tot = models.Evaluacion.objects.all().exclude(
                         directivo=None).aggregate(Sum('totalEvaluacion'))
-                    count = models.Evaluacion.objects.all().exclude(directivo=None).count()
 
+                    count = models.Evaluacion.objects.all().exclude(directivo=None).count()
                     estTotal = tot['totalEvaluacion__sum'] / count
 
-                    idTab = models.PeriodoEvaluacion.objects.latest('id')
                     obj, created = models.Tabulacion.objects.get_or_create(
-                        id=idTab.pk,
-                        defaults={'dirTotal': estTotal},
+                        id=docente.pk,
+                        defaults={'docente': docente},
                     )
                     obj.dirTotal = estTotal
                     obj.save()
 
-                    """ directivo.voto = True
-                    directivo.save() """
             except Exception as e:
                 print(e)
 
-    idTab = models.PeriodoEvaluacion.objects.latest('id')
-
     obj, created = models.Tabulacion.objects.get_or_create(
-        id=idTab.pk,
-        defaults={'total': estTotal},
+        id=docente.pk,
+        defaults={'docente': docente},
     )
 
-    tota = (obj.estTotal + obj.doceTotal + obj.dirTotal) / 3
+    tota = (obj.estTotal + obj.docTotal + obj.dirTotal) / 3
     print(tota)
+    obj.docente = docente
     obj.total = tota
     obj.save()
 
     return HttpResponseRedirect(reverse('vista_cuestionario', args=[str(pk)]))
 
 #!TODO
-#hacer un for para recorrer todos los doocentes evaluados comparando con los campos registrados en evaluiacion docente.all() para el for y evaluacion.all() y sacar solo los estudiantes y directivos para promediar y ver al mejor docente puntuado, anotado para no olvidarme de la logica
+# hacer un for para recorrer todos los doocentes evaluados comparando con los campos registrados en evaluiacion docente.all() para el for y evaluacion.all() y sacar solo los estudiantes y directivos para promediar y ver al mejor docente puntuado, anotado para no olvidarme de la logica
