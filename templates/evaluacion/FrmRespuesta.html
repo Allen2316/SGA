@@ -20,9 +20,7 @@
               
                 {% csrf_token %}
                 <!-- pregunta[1].eleccion_set.all()  -->
-
-                {% if error_message %}
-                <p><strong>{{ error_message }}</strong></p> {% endif %}
+                
 
                 <!-- estudiante -->
 
@@ -50,7 +48,7 @@
                   {% endif %}
 
                   <input type="radio" id="{{ e.id }}eleccion{{ forloop.counter }}" name="{{ e.id }}" value="{{p}}"
-                    class="custom-control-input">
+                    class="custom-control-input" required>
 
                   {% endfor %}
                 </div>
@@ -130,10 +128,14 @@
                 {% endif %}
                 <br>
 
-
-                <button type="submit" class="btn btn-success">
-                  <i class="fas fa-user"></i> Guardar
+                {% if error_message %}
+                <p><strong>{{ error_message }}</strong></p> 
+                <p><a href="{% url 'vista_cuestionario' user.id %}" class="btn btn-primary">Volver</a></p>
+                {% else %}
+                <button type="submit" class="btn btn-success">Guardar
                 </button>
+                {% endif %}
+                
 
           </div>
           </form>

@@ -127,10 +127,30 @@ def vista_cuestionario(request, pk):
                 tab = models.Evaluacion.objects.all().filter(
                     estudiante=None, directivo=None, docente=docente)
 
-                data = {
-                    'docente': docente,
-                    'voto': tab,
-                }
+                try:
+                    tab = models.Evaluacion.objects.all().filter(
+                        estudiante=None, directivo=None, docente=docente)
+
+                    lista = list()
+
+                    for e in tab:
+                        re = False
+                        if e.docente.pk == docente.pk:
+                            re = True
+                            lista.append(docente)
+
+                    print(lista)
+                    if len(lista) == 0:
+                        data = {
+                            'docente': docente,
+                        }
+                    else:
+                        data = {
+                            'errorVDo': 'Encuesta realizada',
+                        }
+
+                except:
+                    pass
 
         except:
             try:
@@ -140,6 +160,32 @@ def vista_cuestionario(request, pk):
                     data = {
                         'directivo': directivo,
                     }
+                    
+                    try:
+                        tab = models.Evaluacion.objects.all().exclude(
+                        directivo=None)
+
+                        doc = directivo.docente.all()
+
+                        lista = list()
+
+                        for d in doc:
+                            re = False
+                            for e in tab:
+                                if e.docente.pk == d.pk:
+                                    re = True
+                                    continue
+                            if re == False:
+                                lista.append(d)
+
+                        if len(lista) == 0:
+                            data = {
+                                'errorVDi': 'Encuesta realizada',
+                            }
+                    except Exception as e:
+                        print('Error: ', e)
+                    else:
+                        data['votoDi'] = lista
             except:
                 data = error
     return render(request, 'evaluacion/asignaturas_docente.html', data)
@@ -232,11 +278,17 @@ def voto(request, pk, docente_id):
 
     cont = 0
     total = 0
+
+    if len(id_p) == 0:
+        return render(request, 'evaluacion/FrmRespuesta.html', {
+            'error_message': 'No seleccionó una opción.',
+        })
+
     for pre in id_p:
 
         try:
             pregunta = get_object_or_404(models.Pregunta, pk=pre)
-        except (KeyError, models.Respuesta.DoesNotExist):
+        except (KeyError, models.Pregunta.DoesNotExist):
             return render(request, 'evaluacion/FrmRespuesta.html', {
                 'error_message': 'No seleccionó una opción.',
             })
@@ -247,10 +299,8 @@ def voto(request, pk, docente_id):
             respuesta.save()
             total = total + int(respuesta.respuesta)
             cont += 1
-
     cuestionario = models.Cuestionario.objects.get(
         pk=pregunta.cuestionario.pk)
-    print(cuestionario)
 
     docente = models.DocenteAsignaturaDocente.objects.get(
         pk=docente_id)

@@ -19,5 +19,5 @@ class FormularioRespuesta(forms.ModelForm):
         }
 
         widgets = {
-            'respuesta': forms.RadioSelect(attrs={'class': 'form-check'}),            
+            'respuesta': forms.RadioSelect(attrs={'class': 'form-check',  'required': True}),            
         }

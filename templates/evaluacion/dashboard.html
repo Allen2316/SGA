@@ -47,9 +47,9 @@
 
 {% block thead %}
 <tr>
-    <th>Nombres</th>
-    <th>Apellidos</th>
+    <th>Docente</th>
     <th>Cedula</th>
+    <th>Carrera</th>
     <th>Asignatura</th>
     <th>Calificación Estudiantes</th>
     <th>Calificación Directivos</th>
@@ -64,9 +64,9 @@
 {% if tabulacion %}
 {% for t in tabulacion %}
 <tr>
-    <td>{{t.docente.docente.first_name}}</td>
-    <td>{{t.docente.docente.last_name}}</td>
+    <td>{{t.docente.docente.first_name}} {{t.docente.docente.last_name}}</td>    
     <td>{{t.docente.cedula}}</td>       
+    <td>{{t.docente.asignatura.carrera.nombre}}</td>
     <td>{{t.docente.asignatura.nombre}}</td>    
     <td>{{t.estTotal}} /5</td>
     <td>{{t.dirTotal}} /5</td>

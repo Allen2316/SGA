@@ -108,7 +108,9 @@ SOY ADMIN
 
 <!-- docente -->
 
-{% if docente %}
+{% if errorVDo %}
+<td>{{errorVDo}}</td>
+{% else %}
 {% for datos in docente.cuestionarios.all %}
 <tr>
     {% if forloop.counter == 1 %}
@@ -126,7 +128,23 @@ SOY ADMIN
 
 <!-- directivo -->
 
-{% if directivo %}
+{% if votoDi %}
+{% for datos in votoDi %}
+<tr>
+    <td>{{ datos.docente.first_name }}</td>
+    <td>{{ datos.docente.last_name }}</td>
+    <td>{{ datos.cedula}}</td>
+
+    <td><a href="{% url 'registro_cuestionario' datos.docente_id %}" class="btn btn-success"
+            style="cursor:pointer; color:white;">Evaluar</a></td>
+
+</tr>
+{% endfor %}
+
+{% elif errorVDi %}
+<td>{{errorVDi}}</td>
+
+{% else %}
 {% for datos in directivo.docente.all %}
 <tr>
     <td>{{ datos.docente.first_name }}</td>
@@ -143,8 +161,7 @@ SOY ADMIN
 
 {% block actualizarTbl%}
 <div class="section-footer bg-whitesmoke br">
-    <a class="btn btn-success" href="" style="cursor:pointer; color:white;"><i class="fas fa-sync-alt"></i>
-        Actualizar</a>
+    <a class="btn btn-success" href="" style="cursor:pointer; color:white;">Actualizar</a>
 </div>
 
 {% endblock %}

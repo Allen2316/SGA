@@ -251,8 +251,7 @@ class Pregunta(models.Model):
 
 
 class Respuesta(models.Model):
-    opciones_choices = (
-        ('0', '-----'),
+    opciones_choices = (        
         ('1', 'Opcion 1'),
         ('2', 'Opcion 2'),
         ('3', 'Opcion 3'),
@@ -262,7 +261,7 @@ class Respuesta(models.Model):
     pregunta = models.ForeignKey(Pregunta, on_delete=models.CASCADE)
 
     respuesta = models.CharField(
-        max_length=15, choices=opciones_choices, verbose_name='Respuesta', default='0')
+        max_length=15, choices=opciones_choices, verbose_name='Respuesta', null=False)
 
     class Meta:
         verbose_name = 'Respuesta'
