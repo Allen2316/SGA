@@ -8,6 +8,7 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView, T
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib import messages
 from django.db.models import Avg, Sum, Max
+from decimal import Decimal
 
 # Create your views here.
 
@@ -59,10 +60,10 @@ def dashboard(request):
         tabulacion = models.Tabulacion.objects.all()
 
         # obtener el resultado mayo
-        doc = models.Tabulacion.objects.aggregate(Max('total'))['total__max']
+        doc = models.Tabulacion.objects.aggregate(Max('totalPon'))['totalPon__max']
         print(doc)
         # obtener la tabulacion que contiene el docente con el resultado mayor
-        ta = models.Tabulacion.objects.filter(total=doc).first()
+        ta = models.Tabulacion.objects.filter(totalPon=doc).first()
         # obtener el docente ganador o mejor puntuado
         docente_g = models.DocenteAsignaturaDocente.objects.get(
             pk=ta.docente.pk)
@@ -160,10 +161,10 @@ def vista_cuestionario(request, pk):
                     data = {
                         'directivo': directivo,
                     }
-                    
+
                     try:
                         tab = models.Evaluacion.objects.all().exclude(
-                        directivo=None)
+                            directivo=None)
 
                         doc = directivo.docente.all()
 
@@ -232,37 +233,6 @@ def registro_cuestionario(request, pk):
     return render(request, 'evaluacion/FrmRespuesta.html', data)
 
 
-""" def voto(request):
-    valores = request.POST
-    lista = []
-    id_p = []
-
-    for i in valores:
-        lista.append(request.POST[i])
-        id_p.append(i)
-
-    lista.pop(0)
-    id_p.pop(0)
-
-    cont = 0
-    for pre in id_p:
-        pregunta = get_object_or_404(models.Pregunta, pk=pre)
-        try:
-            opcion_elegida = pregunta.eleccion_set.get(pk=lista[cont])
-        except (KeyError, models.Eleccion.DoesNotExist):
-            return render(request, 'seguimiento/FrmEleccion.html', {
-                'lista': lista,
-                'id_p': id_p,
-                'error_message': 'No seleccionó una opción.',
-            })
-        else:
-            opcion_elegida.votos += 1
-            opcion_elegida.save()
-            cont += 1
-
-    return HttpResponseRedirect(reverse('lista_oferta_laboral_index',)) """
-
-
 @login_required
 def voto(request, pk, docente_id):
     valores = request.POST
@@ -319,9 +289,9 @@ def voto(request, pk, docente_id):
             evaluacion.save()
 
             tot = models.Evaluacion.objects.all().exclude(
-                estudiante=None).aggregate(Sum('totalEvaluacion'))
+                estudiante=None).filter(docente=docente).aggregate(Sum('totalEvaluacion'))
 
-            count = models.Evaluacion.objects.all().exclude(estudiante=None).count()
+            count = models.Evaluacion.objects.all().exclude(estudiante=None).filter(docente=docente).count()
             estTotal = tot['totalEvaluacion__sum'] / count
 
             obj, created = models.Tabulacion.objects.get_or_create(
@@ -329,7 +299,12 @@ def voto(request, pk, docente_id):
                 defaults={'docente': docente},
             )
 
+            pEs = (estTotal * 10)/5
+            pon = pEs * Decimal(0.6) 
+
             obj.estTotal = estTotal
+            obj.estTotalSobre = pEs
+            obj.estTotalPon = pon
             obj.save()
 
     except:
@@ -344,17 +319,25 @@ def voto(request, pk, docente_id):
                 evaluacion.save()
 
                 tot = models.Evaluacion.objects.all().filter(
-                    estudiante=None, directivo=None).aggregate(Sum('totalEvaluacion'))
+                    estudiante=None, directivo=None).filter(docente=docente).aggregate(Sum('totalEvaluacion'))
 
                 count = models.Evaluacion.objects.all().filter(
-                    estudiante=None, directivo=None).count()
+                    estudiante=None, directivo=None).filter(docente=docente).count()
                 estTotal = tot['totalEvaluacion__sum'] / count
 
                 obj, created = models.Tabulacion.objects.get_or_create(
                     id=docente.pk,
                     defaults={'docente': docente},
                 )
+                """ obj.docTotal = estTotal
+                obj.save() """
+
+                pEs = (estTotal * 10)/5
+                pon = pEs * Decimal(0.1) 
+
                 obj.docTotal = estTotal
+                obj.docTotalSobre = pEs
+                obj.docTotalPon = pon
                 obj.save()
 
         except:
@@ -371,16 +354,24 @@ def voto(request, pk, docente_id):
                     evaluacion.save()
 
                     tot = models.Evaluacion.objects.all().exclude(
-                        directivo=None).aggregate(Sum('totalEvaluacion'))
+                        directivo=None).filter(docente=docente).aggregate(Sum('totalEvaluacion'))
 
-                    count = models.Evaluacion.objects.all().exclude(directivo=None).count()
+                    count = models.Evaluacion.objects.all().exclude(directivo=None).filter(docente=docente).count()
                     estTotal = tot['totalEvaluacion__sum'] / count
 
                     obj, created = models.Tabulacion.objects.get_or_create(
                         id=docente.pk,
                         defaults={'docente': docente},
                     )
+                    
+
+                    pEs = (estTotal * 10)/5
+                    pon = pEs * Decimal(0.3)                    
+
                     obj.dirTotal = estTotal
+
+                    obj.dirTotalSobre = pEs
+                    obj.dirTotalPon = pon
                     obj.save()
 
             except Exception as e:
@@ -392,9 +383,13 @@ def voto(request, pk, docente_id):
     )
 
     tota = (obj.estTotal + obj.docTotal + obj.dirTotal) / 3
-    print(tota)
+    totaSobre = (obj.estTotalSobre + obj.docTotalSobre + obj.dirTotalSobre) / 3
+    totaPon = (obj.estTotalPon + obj.docTotalPon + obj.dirTotalPon)
+    # print(tota)
     obj.docente = docente
     obj.total = tota
+    obj.totalSobre = totaSobre
+    obj.totalPon = totaPon
     obj.save()
 
     return HttpResponseRedirect(reverse('vista_cuestionario', args=[str(pk)]))

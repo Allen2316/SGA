@@ -306,6 +306,34 @@ class Tabulacion(models.Model):
     total = models.DecimalField(
         default=0, decimal_places=2, max_digits=5, null=True, blank=True)
 
+    #sobre 10
+    estTotalSobre = models.DecimalField(
+        default=0, decimal_places=2, max_digits=5, null=False)
+    
+    docTotalSobre = models.DecimalField(
+        default=0, decimal_places=2, max_digits=5, null=False)
+
+    dirTotalSobre = models.DecimalField(
+        default=0, decimal_places=2, max_digits=5, null=False)    
+
+    totalSobre = models.DecimalField(
+        default=0, decimal_places=2, max_digits=5, null=True, blank=True)
+
+    
+    #ponderacion
+    estTotalPon = models.DecimalField(
+        default=0, decimal_places=2, max_digits=5, null=False)
+    
+    docTotalPon = models.DecimalField(
+        default=0, decimal_places=2, max_digits=5, null=False)
+
+    dirTotalPon = models.DecimalField(
+        default=0, decimal_places=2, max_digits=5, null=False)    
+
+    totalPon = models.DecimalField(
+        default=0, decimal_places=2, max_digits=5, null=True, blank=True)
+
+
     class Meta:
         verbose_name = 'Tabulacion'
         verbose_name_plural = 'Tabulaciones'

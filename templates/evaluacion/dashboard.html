@@ -4,9 +4,9 @@
 {% block seccion %}
 <style>
   @media print {
-      .accion {
-          display: none;
-      }
+    .accion {
+      display: none;
+    }
   }
 </style>
 
@@ -14,14 +14,15 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 text-center text-white">
-       
+
         {% if user.is_authenticated and user.is_superuser %}
-       
-        <h1>Administrador {{user.first_name}} {{user.last_name}} {{user.username}}</h1> <h2>Bienvenido</h2>
+
+        <h1>Administrador {{user.first_name}} {{user.last_name}} {{user.username}}</h1>
+        <h2>Bienvenido</h2>
         <h4>Seccion de tabulaciones de encuestas realizadas</h4>
         {% endif %}
 
-        
+
       </div>
     </div>
   </div>
@@ -30,31 +31,29 @@
 
 
 {% if error %}
-  
+
 
 <p>{{ Error }}</p>
 
 {% endif %}
-  
+
 
 {% block tituloLista %}
 <h1>Lista de Resultados</h1>
 {% endblock %}
 
 {% block titulo %}
- <h3>El docente mejor evaluado: <code>{{docente.docente.first_name}} {{docente.docente.last_name}}</code></h3>
+<h3>El docente mejor evaluado: <code>{{docente.docente.first_name}} {{docente.docente.last_name}}</code></h3>
 {% endblock titulo %}
 
 {% block thead %}
 <tr>
-    <th>Docente</th>
-    <th>Cedula</th>
-    <th>Carrera</th>
-    <th>Asignatura</th>
-    <th>Calificación Estudiantes</th>
-    <th>Calificación Directivos</th>
-    <th>Autoevaluacion</th>
-    <th>Calificación General</th>
+  <th>Docente</th>
+  <th>Cedula</th>
+  <th>Carrera</th>
+  <th>Asignatura</th>
+  <th>Calificación</th>
+
 </tr>
 {% endblock thead %}
 
@@ -64,14 +63,50 @@
 {% if tabulacion %}
 {% for t in tabulacion %}
 <tr>
-    <td>{{t.docente.docente.first_name}} {{t.docente.docente.last_name}}</td>    
-    <td>{{t.docente.cedula}}</td>       
-    <td>{{t.docente.asignatura.carrera.nombre}}</td>
-    <td>{{t.docente.asignatura.nombre}}</td>    
-    <td>{{t.estTotal}} /5</td>
-    <td>{{t.dirTotal}} /5</td>
-    <td>{{t.docTotal}} /5</td>
-    <td>{{t.total}} /5</td>
+  <td class="align-middle">{{t.docente.docente.first_name}} {{t.docente.docente.last_name}}</td>
+  <td class="align-middle">{{t.docente.cedula}}</td>
+  <td class="align-middle">{{t.docente.asignatura.carrera.nombre}}</td>
+  <td class="align-middle">{{t.docente.asignatura.nombre}}</td>
+  <td>
+    <table class="table table-bordered table-md" id="data2">
+      <thead>
+        <tr>
+          <th>Componente</th>
+          <th>Puntaje</th>
+          <th>Puntaje sobre 10</th>
+          <th>Puntaje Ponderado</th>          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Autoevaluacion</td>
+          <td>{{t.docTotal}} /5</td>
+          <td>{{t.docTotalSobre}} /10</td>
+          <td>{{t.docTotalPon}} /1</td>
+        </tr>
+
+        <tr>
+          <td>Evaluación por estudiantes</td>
+          <td>{{t.estTotal}} /5</td>
+          <td>{{t.estTotalSobre}} /10</td>
+          <td>{{t.estTotalPon}} /6</td>
+        </tr>
+        
+        <tr>
+          <td>Evaluación por directivos</td>
+          <td>{{t.dirTotal}} /5</td>
+          <td>{{t.dirTotalSobre}} /10</td>
+          <td>{{t.dirTotalPon}} /3</td>
+        </tr>
+        <tr>
+          <td><b>TOTAL</b></td>
+          <td>{{t.total}} /5</td>
+          <td><b>{{t.totalSobre}} /10</b></td>
+          <td><b>{{t.totalPon}} /10</b></td>
+        </tr>
+      </tbody>   
+    </table>
+  </td>
 </tr>
 {% endfor %}
 {% else %}
@@ -82,8 +117,8 @@
 
 {% block actualizarTbl%}
 <div class="section-footer bg-whitesmoke br">
-    <a class="btn btn-success" href="{% url 'dashboard' %}" style="cursor:pointer; color:white;"></i>
-        Actualizar</a>
-        <button type="button" class="btn btn-primary" onclick="print()">Imprimir</button>
+  <a class="btn btn-success" href="{% url 'dashboard' %}" style="cursor:pointer; color:white;"></i>
+    Actualizar</a>
+  <button type="button" class="btn btn-primary" onclick="print()">Imprimir</button>
 </div>
 {% endblock %}

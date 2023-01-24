@@ -157,12 +157,12 @@ CREATE TABLE IF NOT EXISTS `auth_user` (
 DELETE FROM `auth_user`;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-	(1, 'pbkdf2_sha256$390000$pkC52f5Mz1GHaQwzfGjRl0$RuMjDtjrpjAdSA38U3BmsIjhKMx5pc5VNXET0IlvZJI=', '2023-01-23 04:54:38.127396', 1, 'allen', '', '', '', 1, 1, '2023-01-18 03:36:36.767070'),
-	(2, 'pbkdf2_sha256$390000$zMQmXpEzAFmNNICtLBwJ3Z$ilwSDMOq8R8i6+wd62n/Hjpa7GsOBYMA8ZidE410eCk=', '2023-01-23 04:51:25.660685', 0, 'estudiante1_', 'Luis', 'Sarmiento', '', 0, 1, '2023-01-18 03:40:44.000000'),
-	(3, 'pbkdf2_sha256$390000$tTjmjRobtJ5MFT3Kd1UQvz$blFExf6zS7tsFsUVNLWRfmfZoINVyyhUssRNyV3qK68=', '2023-01-23 04:43:19.088698', 0, 'docente1_', 'Pedro', 'Martinez', '', 0, 1, '2023-01-18 05:53:45.000000'),
-	(4, 'pbkdf2_sha256$390000$g0N53VYUxns8qhVdlZyzOw$aA/DaBxMDrVmK0bzhR7/huD9frmzvZuEMCp3bAjBH80=', '2023-01-23 04:46:46.600298', 0, 'directivo1_', 'alfonso', 'monteros', '', 0, 1, '2023-01-18 06:31:40.000000'),
-	(5, 'pbkdf2_sha256$390000$owbWqmNqdnpSdufeVD9yJD$JWPvviLNoP8tUWifpT12yX6gaap850cexl3SHTxSr8c=', '2023-01-23 04:43:37.630705', 0, 'docente2_', 'Francis', 'Franco', '', 0, 1, '2023-01-18 07:40:41.000000'),
-	(6, 'pbkdf2_sha256$390000$CNR9f1LuW8fhci13xtbmuI$8UbLjtmZLGlsHFzSdvNBBrdRzhyT2Cru+4B+g1fXSUY=', '2023-01-23 04:43:50.057606', 0, 'docente3_', 'Julio', 'Alvarez', '', 0, 1, '2023-01-19 19:15:29.000000'),
+	(1, 'pbkdf2_sha256$390000$pkC52f5Mz1GHaQwzfGjRl0$RuMjDtjrpjAdSA38U3BmsIjhKMx5pc5VNXET0IlvZJI=', '2023-01-24 01:41:28.666210', 1, 'allen', '', '', '', 1, 1, '2023-01-18 03:36:36.767070'),
+	(2, 'pbkdf2_sha256$390000$zMQmXpEzAFmNNICtLBwJ3Z$ilwSDMOq8R8i6+wd62n/Hjpa7GsOBYMA8ZidE410eCk=', '2023-01-24 02:25:36.478629', 0, 'estudiante1_', 'Luis', 'Sarmiento', '', 0, 1, '2023-01-18 03:40:44.000000'),
+	(3, 'pbkdf2_sha256$390000$tTjmjRobtJ5MFT3Kd1UQvz$blFExf6zS7tsFsUVNLWRfmfZoINVyyhUssRNyV3qK68=', '2023-01-24 02:38:56.285918', 0, 'docente1_', 'Pedro', 'Martinez', '', 0, 1, '2023-01-18 05:53:45.000000'),
+	(4, 'pbkdf2_sha256$390000$g0N53VYUxns8qhVdlZyzOw$aA/DaBxMDrVmK0bzhR7/huD9frmzvZuEMCp3bAjBH80=', '2023-01-24 02:37:58.629060', 0, 'directivo1_', 'alfonso', 'monteros', '', 0, 1, '2023-01-18 06:31:40.000000'),
+	(5, 'pbkdf2_sha256$390000$owbWqmNqdnpSdufeVD9yJD$JWPvviLNoP8tUWifpT12yX6gaap850cexl3SHTxSr8c=', '2023-01-24 02:39:21.332473', 0, 'docente2_', 'Francis', 'Franco', '', 0, 1, '2023-01-18 07:40:41.000000'),
+	(6, 'pbkdf2_sha256$390000$CNR9f1LuW8fhci13xtbmuI$8UbLjtmZLGlsHFzSdvNBBrdRzhyT2Cru+4B+g1fXSUY=', '2023-01-24 02:39:34.145608', 0, 'docente3_', 'Julio', 'Alvarez', '', 0, 1, '2023-01-19 19:15:29.000000'),
 	(7, 'pbkdf2_sha256$390000$MCFAL7esT9isNp82YUlWh7$FYZxns8uyuneGHY9x/9w0pJHARaAjTfSwaPQHGbZNnE=', '2023-01-23 04:53:23.958498', 0, 'estudiante2_', 'Camila', 'Husrtado', '', 0, 1, '2023-01-19 19:17:24.000000'),
 	(8, 'pbkdf2_sha256$390000$ZUbIBt8TOhv7cDphi55l68$UYkr6VFsWhwEC7d5+5Hm4Lskmch+ezfb1qEa73ZUcmU=', '2023-01-23 04:44:02.983508', 0, 'docente4_', 'Martha', 'Perez', '', 0, 1, '2023-01-20 00:54:32.000000'),
 	(9, 'pbkdf2_sha256$390000$j5XGAh28J1jDlVdGKT9Gws$N5WsOL6SzKD6rIxmwplfGLeZ0n82CiZh9BNE0nTSEYg=', '2023-01-23 04:44:16.703002', 0, 'docente5_', 'Ignacio', 'Lopez', '', 0, 1, '2023-01-20 00:55:07.000000'),
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `django_admin_log` (
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla evaluacion.django_admin_log: ~66 rows (aproximadamente)
+-- Volcando datos para la tabla evaluacion.django_admin_log: ~67 rows (aproximadamente)
 DELETE FROM `django_admin_log`;
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
 INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`, `action_flag`, `change_message`, `content_type_id`, `user_id`) VALUES
@@ -373,10 +373,11 @@ CREATE TABLE IF NOT EXISTS `django_session` (
   KEY `django_session_expire_date_a5c62663` (`expire_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla evaluacion.django_session: ~13 rows (aproximadamente)
+-- Volcando datos para la tabla evaluacion.django_session: ~14 rows (aproximadamente)
 DELETE FROM `django_session`;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+	('165o3ypaqsvkwhjrhajxnwuiz8r868mt', '.eJxVjDsOwyAQRO9CHSG-a5Myvc-AFliCkwgkY1dR7h5bcpGUM-_NvJnHbS1-67T4ObErk-zy2wWMT6oHSA-s98Zjq-syB34o_KSdTy3R63a6fwcFe9nXJooURzIiuBgGR0IiJlAmg1KKcgQLNiNopzNpA2AGhD1Zo-WotSP2-QLrZDdR:1pK8JU:AGxyta2-PZTuVOGVKDmDWQEkQDYANvF7P6inTrSaPxY', '2023-02-07 01:41:28.671228'),
 	('586qekp6uegu3k37hv0o4fm4e5dbaw70', '.eJxVjE0OwiAYBe_C2pDyW3Dp3jOQxwdI1dCktCvj3bVJF7p9M_NeLGBba9h6XsKU2JlpdvrdIuiR2w7SHe02c5rbukyR7wo_aOfXOeXn5XD_Dip6_daSvCUtVDEgSw6pyEIqSyeyGx2AJGC9N9JoqDg6D2g72FKKEkOWlr0_-_A4OA:1pI5vY:VsaAzm96zPVaxyhCQE1q6PIwlrfdFs7_SQzIVLRY9Us', '2023-02-01 10:44:20.562954'),
 	('65ptqs4stbamzn23msrrxrtmd237fzr2', '.eJxVjDsOwyAQRO9CHSG-a5Myvc-AFliCkwgkY1dR7h5bcpGUM-_NvJnHbS1-67T4ObErk-zy2wWMT6oHSA-s98Zjq-syB34o_KSdTy3R63a6fwcFe9nXJooURzIiuBgGR0IiJlAmg1KKcgQLNiNopzNpA2AGhD1Zo-WotSP2-QLrZDdR:1pIbVw:sDj7-hEsVGNFTynr5d9VoYVM2VGfFE-j9RtltbPgJDo', '2023-02-02 20:28:00.108991'),
 	('6jhj685caf16cmxfc5ljnkjl4fs2tdq8', '.eJxVjEEOwiAQRe_C2pBhSgdw6d4zNFOGStVAUtqV8e7apAvd_vfef6mBtzUPW0vLMIs6q06dfreR4yOVHcidy63qWMu6zKPeFX3Qpq9V0vNyuH8HmVv-1mMvPQQIiU3naOosBucQxCZipgTB4-SiM_3kkcBz8AJI6IisEQio3h-9oTZl:1pI2eB:qqn0cJrMuCLBX04fuv4jQAd0i__GNdhZufTIR5b_47g', '2023-02-01 07:14:11.507237'),
@@ -511,7 +512,7 @@ CREATE TABLE IF NOT EXISTS `evaluacion_directivoasignaturadocente_docente` (
   CONSTRAINT `evaluacion_directivo_docenteasignaturadoc_4f16bdac_fk_evaluacio` FOREIGN KEY (`docenteasignaturadocente_id`) REFERENCES `evaluacion_docenteasignaturadocente` (`docente_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla evaluacion.evaluacion_directivoasignaturadocente_docente: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla evaluacion.evaluacion_directivoasignaturadocente_docente: ~5 rows (aproximadamente)
 DELETE FROM `evaluacion_directivoasignaturadocente_docente`;
 /*!40000 ALTER TABLE `evaluacion_directivoasignaturadocente_docente` DISABLE KEYS */;
 INSERT INTO `evaluacion_directivoasignaturadocente_docente` (`id`, `directivoasignaturadocente_id`, `docenteasignaturadocente_id`) VALUES
@@ -633,27 +634,21 @@ CREATE TABLE IF NOT EXISTS `evaluacion_evaluacion` (
   CONSTRAINT `evaluacion_evaluacio_directivo_id_9a4b8bda_fk_evaluacio` FOREIGN KEY (`directivo_id`) REFERENCES `evaluacion_directivoasignaturadocente` (`directivo_id`),
   CONSTRAINT `evaluacion_evaluacio_docente_id_dbfc66a9_fk_evaluacio` FOREIGN KEY (`docente_id`) REFERENCES `evaluacion_docenteasignaturadocente` (`docente_id`),
   CONSTRAINT `evaluacion_evaluacio_estudiante_id_cc62728d_fk_evaluacio` FOREIGN KEY (`estudiante_id`) REFERENCES `evaluacion_estudianteasignaturadocente` (`estudiante_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla evaluacion.evaluacion_evaluacion: ~0 rows (aproximadamente)
 DELETE FROM `evaluacion_evaluacion`;
 /*!40000 ALTER TABLE `evaluacion_evaluacion` DISABLE KEYS */;
 INSERT INTO `evaluacion_evaluacion` (`id`, `totalEvaluacion`, `cuestionario_id`, `directivo_id`, `docente_id`, `estudiante_id`) VALUES
-	(1, 3.33, 2, NULL, 3, NULL),
-	(2, 3.67, 2, NULL, 5, NULL),
-	(3, 4.00, 2, NULL, 6, NULL),
-	(4, 4.67, 2, NULL, 8, NULL),
-	(5, 4.33, 2, NULL, 9, NULL),
-	(6, 2.67, 3, 4, 3, NULL),
-	(7, 3.67, 3, 4, 6, NULL),
-	(8, 3.67, 3, 4, 5, NULL),
-	(9, 2.67, 3, 10, 9, NULL),
-	(10, 4.00, 3, 10, 8, NULL),
-	(14, 3.33, 1, NULL, 6, 2),
-	(15, 2.33, 1, NULL, 5, 2),
-	(16, 1.00, 1, NULL, 3, 2),
-	(17, 4.67, 1, NULL, 8, 7),
-	(18, 3.00, 1, NULL, 9, 7);
+	(1, 5.00, 1, NULL, 3, 2),
+	(2, 4.00, 1, NULL, 6, 2),
+	(3, 5.00, 1, NULL, 5, 2),
+	(4, 4.00, 3, 4, 3, NULL),
+	(5, 5.00, 3, 4, 5, NULL),
+	(6, 5.00, 3, 4, 6, NULL),
+	(7, 5.00, 2, NULL, 3, NULL),
+	(8, 5.00, 2, NULL, 5, NULL),
+	(9, 5.00, 2, NULL, 6, NULL);
 /*!40000 ALTER TABLE `evaluacion_evaluacion` ENABLE KEYS */;
 
 -- Volcando estructura para tabla evaluacion.evaluacion_periodoacademico
@@ -731,66 +726,39 @@ CREATE TABLE IF NOT EXISTS `evaluacion_respuesta` (
   PRIMARY KEY (`id`),
   KEY `evaluacion_respuesta_pregunta_id_db7bed3b_fk_evaluacio` (`pregunta_id`),
   CONSTRAINT `evaluacion_respuesta_pregunta_id_db7bed3b_fk_evaluacio` FOREIGN KEY (`pregunta_id`) REFERENCES `evaluacion_pregunta` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla evaluacion.evaluacion_respuesta: ~0 rows (aproximadamente)
 DELETE FROM `evaluacion_respuesta`;
 /*!40000 ALTER TABLE `evaluacion_respuesta` DISABLE KEYS */;
 INSERT INTO `evaluacion_respuesta` (`id`, `respuesta`, `pregunta_id`) VALUES
-	(1, '3', 4),
-	(2, '2', 5),
-	(3, '5', 6),
-	(4, '2', 4),
-	(5, '4', 5),
-	(6, '5', 6),
-	(7, '3', 4),
-	(8, '4', 5),
-	(9, '5', 6),
-	(10, '5', 4),
-	(11, '4', 5),
-	(12, '5', 6),
-	(13, '4', 4),
-	(14, '4', 5),
-	(15, '5', 6),
-	(16, '1', 7),
-	(17, '2', 8),
+	(1, '5', 1),
+	(2, '5', 2),
+	(3, '5', 3),
+	(4, '4', 1),
+	(5, '4', 2),
+	(6, '4', 3),
+	(7, '5', 1),
+	(8, '5', 2),
+	(9, '5', 3),
+	(10, '4', 7),
+	(11, '4', 8),
+	(12, '4', 9),
+	(13, '5', 7),
+	(14, '5', 8),
+	(15, '5', 9),
+	(16, '5', 7),
+	(17, '5', 8),
 	(18, '5', 9),
-	(19, '2', 7),
-	(20, '4', 8),
-	(21, '5', 9),
-	(22, '5', 7),
-	(23, '3', 8),
-	(24, '3', 9),
-	(25, '3', 7),
-	(26, '2', 8),
-	(27, '3', 9),
-	(28, '3', 7),
-	(29, '4', 8),
-	(30, '5', 9),
-	(31, '4', 1),
-	(32, '4', 2),
-	(33, '4', 3),
-	(34, '3', 1),
-	(35, '4', 2),
-	(36, '5', 3),
-	(37, '5', 1),
-	(38, '4', 2),
-	(39, '3', 3),
-	(40, '5', 1),
-	(41, '3', 2),
-	(42, '2', 3),
-	(43, '1', 1),
-	(44, '2', 2),
-	(45, '4', 3),
-	(46, '1', 1),
-	(47, '1', 2),
-	(48, '1', 3),
-	(49, '5', 1),
-	(50, '4', 2),
-	(51, '5', 3),
-	(52, '2', 1),
-	(53, '3', 2),
-	(54, '4', 3);
+	(19, '5', 4),
+	(20, '5', 5),
+	(21, '5', 6),
+	(22, '5', 4),
+	(23, '5', 5),
+	(24, '5', 6),
+	(25, '5', 4),
+	(26, '5', 5),
+	(27, '5', 6);
 /*!40000 ALTER TABLE `evaluacion_respuesta` ENABLE KEYS */;
 
 -- Volcando estructura para tabla evaluacion.evaluacion_tabulacion
@@ -800,21 +768,27 @@ CREATE TABLE IF NOT EXISTS `evaluacion_tabulacion` (
   `docTotal` decimal(5,2) NOT NULL,
   `dirTotal` decimal(5,2) NOT NULL,
   `total` decimal(5,2) DEFAULT NULL,
+  `estTotalSobre` decimal(5,2) NOT NULL,
+  `docTotalSobre` decimal(5,2) NOT NULL,
+  `dirTotalSobre` decimal(5,2) NOT NULL,
+  `totalSobre` decimal(5,2) DEFAULT NULL,
+  `estTotalPon` decimal(5,2) NOT NULL,
+  `docTotalPon` decimal(5,2) NOT NULL,
+  `dirTotalPon` decimal(5,2) NOT NULL,
+  `totalPon` decimal(5,2) DEFAULT NULL,
   `docente_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `evaluacion_tabulacio_docente_id_9d4155f1_fk_evaluacio` (`docente_id`),
   CONSTRAINT `evaluacion_tabulacio_docente_id_9d4155f1_fk_evaluacio` FOREIGN KEY (`docente_id`) REFERENCES `evaluacion_docenteasignaturadocente` (`docente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla evaluacion.evaluacion_tabulacion: ~0 rows (aproximadamente)
 DELETE FROM `evaluacion_tabulacion`;
 /*!40000 ALTER TABLE `evaluacion_tabulacion` DISABLE KEYS */;
-INSERT INTO `evaluacion_tabulacion` (`id`, `estTotal`, `docTotal`, `dirTotal`, `total`, `docente_id`) VALUES
-	(3, 2.22, 3.33, 2.67, 2.74, 3),
-	(5, 2.83, 3.50, 3.34, 3.22, 5),
-	(6, 3.33, 3.67, 3.17, 3.39, 6),
-	(8, 2.83, 3.92, 3.34, 3.36, 8),
-	(9, 2.87, 4.00, 3.17, 3.35, 9);
+INSERT INTO `evaluacion_tabulacion` (`id`, `estTotal`, `docTotal`, `dirTotal`, `total`, `estTotalSobre`, `docTotalSobre`, `dirTotalSobre`, `totalSobre`, `estTotalPon`, `docTotalPon`, `dirTotalPon`, `totalPon`, `docente_id`) VALUES
+	(3, 5.00, 5.00, 4.00, 4.67, 10.00, 10.00, 8.00, 9.33, 6.00, 1.00, 2.40, 9.40, 3),
+	(5, 5.00, 5.00, 5.00, 5.00, 10.00, 10.00, 10.00, 10.00, 6.00, 1.00, 3.00, 10.00, 5),
+	(6, 4.00, 5.00, 5.00, 4.67, 8.00, 10.00, 10.00, 9.33, 4.80, 1.00, 3.00, 8.80, 6);
 /*!40000 ALTER TABLE `evaluacion_tabulacion` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
